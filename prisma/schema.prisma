@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id                 String    @id @default(cuid())
+  name               String
+  slug               String    @unique
+  oneLiner           String?   @map("one_liner")
+  chineseSummary     String?   @map("chinese_summary")
+  officialUrl        String?   @map("official_url")
+  githubUrl          String?   @map("github_url")
+  sourceUrl          String?   @map("source_url")
+  sourceType         String?   @map("source_type") // github | awesome_list | manual
+  description        String?
+  rawContent         String?   @map("raw_content")
+  readmeText         String?   @map("readme_text")
+
+  // AI-classified fields
+  roleCategories     String[]  @map("role_categories")
+  functionCategories String[]  @map("function_categories")
+  industryCategories String[]  @map("industry_categories")
+  tags               String[]
+  useCases           String[]  @map("use_cases")
+  targetUsers        String[]  @map("target_users")
+
+  // Metadata
+  difficulty         String?   @default("intermediate")
+  requiresCoding     Boolean   @default(false) @map("requires_coding")
+  isOpenSource       Boolean   @default(false) @map("is_open_source")
+  pricingType        String?   @default("unknown") @map("pricing_type") // free|freemium|paid|open_source|unknown
+
+  // Usage details
+  inputType          String[]  @map("input_type")
+  outputType         String[]  @map("output_type")
+  workflowSteps      String[]  @map("workflow_steps")
+  whyUseful          String?   @map("why_useful")
+  timeSavedReason    String?   @map("time_saved_reason")
+  limitations        String?
+  riskNotes          String?   @map("risk_notes")
+  similarTools       String[]  @map("similar_tools")
+
+  // Source stats
+  stars              Int?      @default(0)
+  forks              Int?      @default(0)
+  votes              Int?      @default(0)
+  language           String?
+  topics             String[]
+  lastSourceUpdate   DateTime? @map("last_source_update")
+  lastCrawledAt      DateTime? @map("last_crawled_at")
+
+  // Scoring
+  score              Int?      @default(0)
+  scoreReason        String?   @map("score_reason")
+
+  // Visibility
+  isActive           Boolean   @default(false) @map("is_active")
+  isRelevant         Boolean   @default(true)  @map("is_relevant")
+  isHidden           Boolean   @default(false) @map("is_hidden")
+
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt      @map("updated_at")
+
+  enrichmentLogs     EnrichmentLog[]
+
+  @@index([score])
+  @@index([isActive, isHidden])
+  @@index([roleCategories])
+  @@index([functionCategories])
+  @@map("skills")
+}
+
+model CrawlLog {
+  id               String    @id @default(cuid())
+  source           String
+  query            String?
+  status           String    @default("running") // running|completed|failed
+  totalFound       Int?      @default(0) @map("total_found")
+  totalSaved       Int?      @default(0) @map("total_saved")
+  totalUpdated     Int?      @default(0) @map("total_updated")
+  totalIrrelevant  Int?      @default(0) @map("total_irrelevant")
+  errorMessage     String?   @map("error_message")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  completedAt      DateTime? @map("completed_at")
+
+  @@map("crawl_logs")
+}
+
+model EnrichmentLog {
+  id           String   @id @default(cuid())
+  skillId      String   @map("skill_id")
+  model        String?
+  status       String   @default("pending") // pending|running|completed|failed
+  inputTokens  Int?     @default(0) @map("input_tokens")
+  outputTokens Int?     @default(0) @map("output_tokens")
+  errorMessage String?  @map("error_message")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@map("enrichment_logs")
+}
