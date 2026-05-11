@@ -5,7 +5,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat openssl
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 # Builder stage
 FROM base AS builder
