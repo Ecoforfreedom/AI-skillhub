@@ -382,7 +382,26 @@ async function main() {
   await prisma.$disconnect()
 }
 
-main().catch(e => {
-  console.error(e)
-  process.exit(1)
-})
+/** Auto-seed: called from instrumentation.ts on server startup */
+export async function autoSeed() {
+  try {
+    const count = await prisma.skill.count()
+    if (count === 0) {
+      console.log('🌱 [AutoSeed] Empty database detected, seeding initial skills...')
+      await main()
+      console.log('🌿 [AutoSeed] Done!')
+    } else {
+      console.log(`🌿 [AutoSeed] ${count} skills already in DB, skipping`)
+    }
+  } catch (e) {
+    console.error('❌ [AutoSeed] Failed:', e)
+  }
+}
+
+// Only run directly when called as CLI script (npm run db:seed)
+if (process.env.npm_lifecycle_script?.includes('seed')) {
+  main().catch(e => {
+    console.error(e)
+    process.exit(1)
+  })
+}

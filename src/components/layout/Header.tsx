@@ -4,14 +4,219 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { Search, Menu, X } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 const NAV_LINKS = [
-  { href: '/skills',     label: '[ 全部工具 ]' },
-  { href: '/roles',      label: '[ 按岗位 ]' },
-  { href: '/categories', label: '[ 按功能 ]' },
-  { href: '/rankings',   label: '[ 榜单 ]' },
+  { href: '/skills',     label: '全部工具', icon: '🗺️' },
+  { href: '/roles',      label: '按岗位',   icon: '👤' },
+  { href: '/categories', label: '按功能',   icon: '📦' },
+  { href: '/rankings',   label: '排行榜',   icon: '🏆' },
 ]
+
+export default function Header() {
+  const pathname = usePathname()
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<any[]>([])
+  const [showResults, setShowResults] = useState(false)
+  const searchRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setShowResults(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  useEffect(() => {
+    if (query.length < 2) { setResults([]); setShowResults(false); return }
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=6`)
+        const data = await res.json()
+        setResults(data.results || [])
+        setShowResults(true)
+      } catch {}
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [query])
+
+  return (
+    <header
+      style={{
+        borderBottom: '4px solid var(--sdv-border)',
+        boxShadow: '0 4px 0 var(--sdv-sh)',
+        background: 'linear-gradient(180deg, var(--sdv-wood2) 0%, var(--sdv-wood) 100%)',
+        position: 'sticky', top: 0, zIndex: 50,
+      }}
+    >
+      <div className="container flex h-14 items-center gap-4" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Logo — Stardew title sign */}
+        <Link href="/" className="flex items-center gap-2 shrink-0" style={{ textDecoration: 'none' }}>
+          <span
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 36, height: 36, fontSize: 20,
+              background: 'var(--sdv-dark)',
+              border: '3px solid var(--sdv-border)',
+              boxShadow: 'inset 2px 2px 0 var(--sdv-sh), inset -2px -2px 0 var(--sdv-hi)',
+            }}
+          >⚡</span>
+          <span
+            className="hidden sm:inline font-pixel"
+            style={{
+              fontSize: '10px',
+              color: 'var(--sdv-gold)',
+              textShadow: '1px 1px 0 var(--sdv-sh), 0 0 8px rgba(240,192,48,0.5)',
+              letterSpacing: '0.04em',
+            }}
+          >
+            SKILL <span style={{ color: 'var(--sdv-teal)' }}>RADAR</span>
+          </span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-1 ml-4">
+          {NAV_LINKS.map(link => {
+            const active = pathname.startsWith(link.href)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="font-pixel transition-all"
+                style={{
+                  fontSize: '8px',
+                  padding: '6px 10px',
+                  color: active ? 'var(--sdv-gold)' : 'var(--sdv-warm)',
+                  borderBottom: active ? '3px solid var(--sdv-gold)' : '3px solid transparent',
+                  textShadow: active ? '0 0 6px rgba(240,192,48,0.5)' : 'none',
+                }}
+                onMouseOver={e => {
+                  if (!active) (e.currentTarget as HTMLElement).style.color = 'var(--sdv-cream)'
+                }}
+                onMouseOut={e => {
+                  if (!active) (e.currentTarget as HTMLElement).style.color = 'var(--sdv-warm)'
+                }}
+              >
+                {link.icon} {link.label}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* Search */}
+        <div className="flex-1 max-w-sm ml-auto relative" ref={searchRef}>
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5" style={{ color: 'var(--sdv-teal)' }} />
+            <input
+              type="text"
+              placeholder="搜索工具..."
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              className="w-full h-9 pl-9 pr-4 font-dot text-base"
+              style={{
+                background: 'var(--sdv-dark)',
+                border: '3px solid var(--sdv-border)',
+                color: 'var(--sdv-cream)',
+                boxShadow: 'inset 2px 2px 0 var(--sdv-sh)',
+                outline: 'none',
+              }}
+              onFocus={e => {
+                e.currentTarget.style.borderColor = 'var(--sdv-teal)'
+                if (query.length >= 2) setShowResults(true)
+              }}
+              onBlur={e => { e.currentTarget.style.borderColor = 'var(--sdv-border)' }}
+            />
+          </div>
+          {showResults && results.length > 0 && (
+            <div
+              className="absolute top-full mt-1 w-full z-50 overflow-hidden"
+              style={{
+                background: 'var(--sdv-wood)',
+                border: '3px solid var(--sdv-teal)',
+                boxShadow: '3px 3px 0 var(--sdv-sh)',
+              }}
+            >
+              {results.map(r => (
+                <Link
+                  key={r.id}
+                  href={`/skills/${r.slug}`}
+                  onClick={() => { setShowResults(false); setQuery('') }}
+                  className="flex items-center gap-3 px-4 py-2 transition-colors"
+                  style={{ borderBottom: '2px solid var(--sdv-sh)' }}
+                  onMouseOver={e => (e.currentTarget.style.background = 'rgba(80,200,160,0.1)')}
+                  onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+                >
+                  <div className="min-w-0 flex-1">
+                    <p className="font-pixel truncate" style={{ fontSize: '8px', color: 'var(--sdv-cream)' }}>{r.name}</p>
+                    <p className="font-dot text-sm truncate" style={{ color: 'var(--sdv-dim)' }}>{r.oneLiner}</p>
+                  </div>
+                  {r.score && (
+                    <span className="font-pixel shrink-0" style={{ fontSize: '7px', color: 'var(--sdv-gold)' }}>
+                      {scoreToStars(r.score)}
+                    </span>
+                  )}
+                </Link>
+              ))}
+              <Link
+                href={`/skills?search=${encodeURIComponent(query)}`}
+                onClick={() => setShowResults(false)}
+                className="block px-4 py-2 font-dot text-sm text-center"
+                style={{ color: 'var(--sdv-teal)', borderTop: '2px solid var(--sdv-border)' }}
+              >
+                ▶ 查看全部结果
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden p-2"
+          style={{ color: 'var(--sdv-gold)' }}
+          onClick={() => setOpen(!open)}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {/* Mobile Nav */}
+      {open && (
+        <div
+          className="md:hidden px-4 py-3 flex flex-col gap-1"
+          style={{ borderTop: '3px solid var(--sdv-border)', background: 'var(--sdv-wood)' }}
+        >
+          {NAV_LINKS.map(link => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="font-pixel px-3 py-2"
+              style={{
+                fontSize: '9px',
+                color: pathname.startsWith(link.href) ? 'var(--sdv-gold)' : 'var(--sdv-warm)',
+                borderLeft: `3px solid ${pathname.startsWith(link.href) ? 'var(--sdv-gold)' : 'transparent'}`,
+              }}
+            >
+              {link.icon} {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </header>
+  )
+}
+
+function scoreToStars(score: number): string {
+  if (score >= 90) return '★★★★★'
+  if (score >= 80) return '★★★★'
+  if (score >= 70) return '★★★'
+  if (score >= 60) return '★★'
+  return '★'
+}
+
 
 export default function Header() {
   const pathname = usePathname()

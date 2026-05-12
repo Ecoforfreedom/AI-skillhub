@@ -2,7 +2,105 @@ import Link from 'next/link'
 
 export default function Footer() {
   return (
-    <footer style={{ borderTop: '2px solid var(--px-border)', background: 'var(--px-bg)', marginTop: 64, position: 'relative', zIndex: 1 }}>
+    <footer style={{
+      borderTop: '4px solid var(--sdv-border)',
+      boxShadow: '0 -3px 0 var(--sdv-sh)',
+      background: 'linear-gradient(0deg, var(--sdv-wood2) 0%, var(--sdv-wood) 100%)',
+      marginTop: 64,
+      position: 'relative',
+      zIndex: 1,
+    }}>
+      <div className="container py-10">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {/* Brand */}
+          <div className="col-span-2 md:col-span-1">
+            <Link href="/" className="inline-flex items-center gap-2 mb-4" style={{ textDecoration: 'none' }}>
+              <span className="sdv-slot flex items-center justify-center text-lg" style={{ width: 32, height: 32 }}>⚡</span>
+              <span className="font-pixel" style={{ fontSize: '9px', color: 'var(--sdv-gold)', textShadow: '1px 1px 0 var(--sdv-sh)' }}>
+                SKILL<span style={{ color: 'var(--sdv-teal)' }}>RADAR</span>
+              </span>
+            </Link>
+            <p className="font-dot" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.7 }}>
+              发现每个岗位能用的 AI 工具和自动化技能，让职场效率翻倍。
+            </p>
+          </div>
+
+          {/* Nav links */}
+          {[
+            {
+              title: '导航',
+              links: [
+                { href: '/skills', label: '全部工具' },
+                { href: '/roles', label: '按岗位' },
+                { href: '/categories', label: '按功能' },
+                { href: '/rankings', label: '排行榜' },
+              ],
+            },
+            {
+              title: '热门岗位',
+              links: [
+                { href: '/skills?role=consulting', label: '咨询顾问' },
+                { href: '/skills?role=finance', label: '金融投资' },
+                { href: '/skills?role=engineering', label: '技术开发' },
+                { href: '/skills?role=product', label: '产品经理' },
+              ],
+            },
+            {
+              title: '热门功能',
+              links: [
+                { href: '/skills?category=automation', label: '自动化' },
+                { href: '/skills?category=meeting', label: '会议纪要' },
+                { href: '/skills?category=coding', label: '编程开发' },
+                { href: '/skills?category=presentation', label: 'PPT制作' },
+              ],
+            },
+          ].map(section => (
+            <div key={section.title}>
+              <p className="font-pixel mb-3" style={{ fontSize: '7px', color: 'var(--sdv-warm)' }}>
+                ▸ {section.title}
+              </p>
+              <ul className="space-y-2">
+                {section.links.map(l => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="font-dot transition-colors"
+                      style={{ fontSize: '17px', color: 'var(--sdv-dim)', textDecoration: 'none' }}
+                      onMouseOver={e => ((e.currentTarget as HTMLElement).style.color = 'var(--sdv-teal)')}
+                      onMouseOut={e => ((e.currentTarget as HTMLElement).style.color = 'var(--sdv-dim)')}
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div
+          className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2"
+          style={{ borderTop: '3px solid var(--sdv-sh)' }}
+        >
+          <p className="font-pixel" style={{ fontSize: '6px', color: 'var(--sdv-dim)' }}>
+            © 2026 SKILL RADAR ✦ LEVEL UP YOUR WORKFLOW
+          </p>
+          <Link
+            href="/admin"
+            className="font-pixel"
+            style={{ fontSize: '6px', color: 'var(--sdv-sh)', textDecoration: 'none' }}
+            onMouseOver={e => ((e.currentTarget as HTMLElement).style.color = 'var(--sdv-dim)')}
+            onMouseOut={e => ((e.currentTarget as HTMLElement).style.color = 'var(--sdv-sh)')}
+          >
+            ⚙ ADMIN
+          </Link>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
       <div className="container py-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
