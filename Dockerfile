@@ -31,10 +31,11 @@ COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.js ./next.config.js
-RUN mkdir -p ./public
+COPY --from=builder /app/start.sh ./start.sh
+RUN mkdir -p ./public && chmod +x ./start.sh
 
 EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["sh", "-c", "node_modules/.bin/prisma db push && node_modules/.bin/next start"]
+CMD ["sh", "./start.sh"]
