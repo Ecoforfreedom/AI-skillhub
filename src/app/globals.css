@@ -1,45 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 222 47% 5%;
-    --foreground: 210 40% 98%;
-    --card: 222 47% 8%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222 47% 7%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 263 70% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 32% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 55%;
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 17%;
-    --input: 217 32% 17%;
-    --ring: 263 70% 60%;
-    --radius: 0.5rem;
+    --background: 240 20% 4%;
+    --foreground: 0 0% 95%;
+    --card: 240 15% 7%;
+    --card-foreground: 0 0% 95%;
+    --popover: 240 15% 6%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 170 100% 50%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 240 15% 14%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 15% 14%;
+    --muted-foreground: 240 10% 50%;
+    --accent: 295 100% 60%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 240 15% 18%;
+    --input: 240 15% 14%;
+    --ring: 170 100% 50%;
+    --radius: 0px;
+
+    /* Pixel palette */
+    --px-green:  #00ff88;
+    --px-cyan:   #00e5ff;
+    --px-purple: #bf00ff;
+    --px-yellow: #ffe600;
+    --px-red:    #ff3a3a;
+    --px-bg:     #070710;
+    --px-card:   #0e0e1a;
+    --px-border: #2a2a4a;
   }
 }
 
 @layer base {
-  * { @apply border-border; }
+  * { @apply border-border; border-radius: 0 !important; }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: var(--px-bg);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    image-rendering: pixelated;
   }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { @apply bg-gray-900; }
-  ::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
-  ::-webkit-scrollbar-thumb:hover { @apply bg-gray-600; }
+  h1, h2, h3, .font-pixel {
+    font-family: 'Press Start 2P', monospace;
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--px-bg); border-left: 2px solid var(--px-border); }
+  ::-webkit-scrollbar-thumb { background: var(--px-green); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--px-cyan); }
+}
+
+/* Scanlines overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Pixel grid dot background */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,255,136,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 @layer utilities {
+  .pixel-box {
+    border: 2px solid var(--px-border);
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.8);
+  }
+  .pixel-box-green {
+    border: 2px solid var(--px-green);
+    box-shadow: 4px 4px 0 rgba(0,255,136,0.2);
+  }
+  .pixel-box-cyan {
+    border: 2px solid var(--px-cyan);
+    box-shadow: 4px 4px 0 rgba(0,229,255,0.2);
+  }
+  .pixel-glow-green { text-shadow: 0 0 8px var(--px-green), 0 0 20px var(--px-green); }
+  .pixel-glow-cyan  { text-shadow: 0 0 8px var(--px-cyan), 0 0 20px var(--px-cyan); }
+  .pixel-btn {
+    @apply inline-block border-2 border-current px-4 py-2 font-pixel text-xs transition-all;
+    box-shadow: 3px 3px 0 currentColor;
+  }
+  .pixel-btn:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 currentColor;
+  }
+  .pixel-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: none;
+  }
+  .font-pixel { font-family: 'Press Start 2P', monospace; }
+  .font-vt { font-family: 'VT323', monospace; }
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
