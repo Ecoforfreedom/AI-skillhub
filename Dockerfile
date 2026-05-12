@@ -32,7 +32,7 @@ COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/start.sh ./start.sh
-RUN mkdir -p ./public && chmod +x ./start.sh
+RUN mkdir -p ./public && sed -i 's/\r//' ./start.sh && chmod +x ./start.sh
 
 EXPOSE 3000
 ENV PORT 3000
