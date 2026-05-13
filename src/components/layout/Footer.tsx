@@ -67,12 +67,9 @@ export default function Footer() {
         {/* Link columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <span className="sdv-slot flex items-center justify-center font-pixel" style={{ width: 36, height: 36, fontSize: '18px', background: '#FFD600', border: '3px solid #FFD600' }}>
-                💀
-              </span>
+            <Link href="/" className="inline-flex items-center mb-4">
               <span className="font-pixel" style={{ fontSize: '22px', color: '#FFD600', letterSpacing: '0.04em' }}>
-                AI SKILL RADAR
+                AI AGENT ARSENAL
               </span>
             </Link>
             <p className="font-dot" style={{ fontSize: '13px', color: '#888', lineHeight: 1.8, maxWidth: 320, letterSpacing: '0.02em' }}>
@@ -101,7 +98,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '2px solid #333' }}>
           <p className="font-dot" style={{ fontSize: '12px', color: '#666', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            © 2026 AI SKILL RADAR — NEO-BRUTALIST EDITION
+            © 2026 AI AGENT ARSENAL — NEO-BRUTALIST EDITION
           </p>
           <Link href="/admin" className="sdv-btn" style={{ minHeight: 38, fontSize: '12px', paddingInline: 14 }}>
             ADMIN

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 const BOOT_LINES = [
-  '> INITIALIZING AI SKILL RADAR v2.0...',
+  '> INITIALIZING AI AGENT ARSENAL v2.0...',
   '> SCANNING 200+ AI TOOLS...',
   '> LOADING ROLE PROFILES...',
   '> CALIBRATING SIGNAL SCORES...',
@@ -114,7 +114,7 @@ export default function SplashGate() {
           zIndex: 10,
         }}>
           <p style={{ fontFamily: FONT_MONO, fontSize: '11px', color: '#333', letterSpacing: '0.1em', marginBottom: 24 }}>
-            SYSTEM BOOT — AI SKILL RADAR
+            SYSTEM BOOT — AI AGENT ARSENAL
           </p>
           {BOOT_LINES.slice(0, visibleLines).map((line, i) => (
             <p
@@ -154,7 +154,7 @@ export default function SplashGate() {
             background: '#FFD600', color: '#000',
             padding: '5px 16px', marginBottom: 36,
           }}>
-            AI 工具导航 · 2026
+            AI AGENT GEAR LIBRARY · 2026
           </div>
 
           {/* Main glitch title */}
@@ -170,9 +170,9 @@ export default function SplashGate() {
               animation: glitch ? 'glitchText 0.22s ease both' : undefined,
             }}
           >
-            AI SKILL
+            AI AGENT
             <br />
-            RADAR
+            ARSENAL
           </h1>
 
           {/* Tagline */}

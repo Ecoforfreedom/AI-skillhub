@@ -7,7 +7,7 @@ import CustomCursor from '@/components/ui/CustomCursor'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 
 export const metadata: Metadata = {
-  title: 'AI Skill Radar ★ 发现每个岗位能用的 AI 工具',
+  title: 'AI Agent Arsenal ★ 发现每个岗位能用的 AI 工具',
   description:
     '收录各岗位能用的 AI 工具、自动化方案、Prompt 模板、MCP Server 和最佳实践，帮助职场人快速找到直接能用的提效工具。',
   keywords: ['AI工具', '自动化', '工作效率', 'AI workflow', 'MCP', '提效工具'],

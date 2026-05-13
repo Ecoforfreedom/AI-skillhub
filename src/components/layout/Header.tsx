@@ -73,16 +73,10 @@ export default function Header() {
             padding: '10px 4px',
           }}
         >
-          <Link href="/" className="flex items-center gap-2 shrink-0 min-w-0" style={{ paddingInline: 4 }}>
-            <span
-              className="sdv-slot flex items-center justify-center font-pixel"
-              style={{ width: 40, height: 40, fontSize: '20px' }}
-            >
-              💀
-            </span>
-            <span className="hidden sm:flex flex-col min-w-0">
-              <span className="font-pixel" style={{ fontSize: '26px', color: '#000', letterSpacing: '0.04em' }}>
-                AI SKILL RADAR
+          <Link href="/" className="flex items-center shrink-0 min-w-0" style={{ paddingInline: 4 }}>
+            <span className="flex flex-col min-w-0">
+              <span className="font-pixel" style={{ fontSize: 'clamp(20px, 5vw, 26px)', color: '#000', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
+                AI AGENT ARSENAL
               </span>
             </span>
           </Link>

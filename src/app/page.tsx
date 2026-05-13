@@ -95,10 +95,10 @@ export default async function HomePage() {
               </div>
 
               <h1 className="font-pixel mb-6" style={{ fontSize: 'clamp(64px, 9vw, 120px)', maxWidth: 900, color: '#000', lineHeight: 0.92 }}>
-                AI SKILL
+                AI AGENT
                 <br />
                 <span style={{ color: '#000' }}>
-                  RADAR
+                  ARSENAL
                 </span>
               </h1>
 
