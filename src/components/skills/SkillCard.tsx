@@ -10,16 +10,16 @@ interface Props {
 }
 
 function scoreToStars(score: number): { stars: string; color: string; label: string } {
-  if (score >= 90) return { stars: '★★★★★', color: 'var(--sdv-teal)', label: '精选' }
+  if (score >= 90) return { stars: '★★★★★', color: 'var(--sdv-teal)', label: '主装' }
   if (score >= 80) return { stars: '★★★★', color: 'var(--sdv-silver)', label: '高信号' }
-  if (score >= 70) return { stars: '★★★', color: 'var(--sdv-blue)', label: '实用' }
-  return { stars: '★★', color: 'var(--sdv-dim)', label: '已索引' }
+  if (score >= 70) return { stars: '★★★', color: 'var(--sdv-purple)', label: '常用' }
+  return { stars: '★★', color: 'var(--sdv-dim)', label: '库存' }
 }
 
 function qualityBadge(score: number): { icon: string; color: string; bg: string } {
-  if (score >= 90) return { icon: '精选', color: 'var(--sdv-teal)', bg: 'rgba(124,230,255,0.12)' }
-  if (score >= 80) return { icon: '高信号', color: 'var(--sdv-silver)', bg: 'rgba(219,231,255,0.08)' }
-  return { icon: '已索引', color: 'var(--sdv-dim)', bg: 'rgba(141,154,182,0.08)' }
+  if (score >= 90) return { icon: '主装', color: 'var(--sdv-teal)', bg: 'rgba(255,221,126,0.34)' }
+  if (score >= 80) return { icon: '高信号', color: 'var(--sdv-silver)', bg: 'rgba(255,241,183,0.58)' }
+  return { icon: '库存', color: 'var(--sdv-dim)', bg: 'rgba(255,247,214,0.72)' }
 }
 
 export default function SkillCard({ skill, compact = false }: Props) {
@@ -85,10 +85,10 @@ export default function SkillCard({ skill, compact = false }: Props) {
               {starsInfo.stars}
             </span>
             <span className="font-dot text-sm" style={{ color: 'var(--sdv-dim)', fontSize: '13px' }}>
-              {starsInfo.label} · {skill.score}分
+              {starsInfo.label} · Lv.{skill.score}
             </span>
             {skill.stars != null && skill.stars > 0 ? (
-              <span className="font-dot text-xs px-2.5 py-1" style={{ border: '1px solid rgba(151,184,255,0.14)', borderRadius: 999, color: 'var(--sdv-dim)' }}>
+              <span className="font-dot text-xs px-2.5 py-1" style={{ border: '1px solid rgba(144,104,20,0.14)', borderRadius: 999, color: 'var(--sdv-dim)' }}>
                 GitHub {formatNumber(skill.stars)}
               </span>
             ) : null}
@@ -106,7 +106,7 @@ export default function SkillCard({ skill, compact = false }: Props) {
             <span
               key={(role as { id: string }).id}
               className="font-dot text-xs px-3 py-1.5"
-              style={{ border: '1px solid rgba(124,230,255,0.18)', borderRadius: 999, color: 'var(--sdv-teal)', background: 'rgba(124,230,255,0.08)' }}
+              style={{ border: '1px solid rgba(168,122,24,0.18)', borderRadius: 999, color: 'var(--sdv-teal)', background: 'rgba(255,229,138,0.28)' }}
             >
               {(role as { icon: string }).icon} {(role as { name: string }).name}
             </span>
@@ -115,27 +115,27 @@ export default function SkillCard({ skill, compact = false }: Props) {
             <span
               key={(category as { id: string }).id}
               className="font-dot text-xs px-3 py-1.5"
-              style={{ border: '1px solid rgba(151,184,255,0.14)', borderRadius: 999, color: 'var(--sdv-warm)' }}
+              style={{ border: '1px solid rgba(144,104,20,0.14)', borderRadius: 999, color: 'var(--sdv-warm)', background: 'rgba(255,248,219,0.78)' }}
             >
               {(category as { icon: string }).icon} {(category as { name: string }).name}
             </span>
           ))}
           {pricingInfo ? (
-            <span className="font-dot text-xs px-3 py-1.5 ml-auto" style={{ border: '1px solid rgba(151,184,255,0.14)', borderRadius: 999, color: 'var(--sdv-dim)' }}>
+            <span className="font-dot text-xs px-3 py-1.5 ml-auto" style={{ border: '1px solid rgba(144,104,20,0.14)', borderRadius: 999, color: 'var(--sdv-dim)', background: 'rgba(255,248,219,0.78)' }}>
               {pricingInfo.label}
             </span>
           ) : null}
           {skill.isOpenSource ? (
-            <span className="font-dot text-xs px-3 py-1.5" style={{ border: '1px solid rgba(155,140,255,0.28)', borderRadius: 999, color: 'var(--sdv-purple)', background: 'rgba(155,140,255,0.08)' }}>
+            <span className="font-dot text-xs px-3 py-1.5" style={{ border: '1px solid rgba(168,108,18,0.28)', borderRadius: 999, color: 'var(--sdv-purple)', background: 'rgba(255,224,125,0.16)' }}>
               开源
             </span>
           ) : null}
         </div>
       </div>
 
-      <div className="flex items-center gap-3 px-6 py-4" style={{ borderTop: '1px solid rgba(151, 184, 255, 0.08)' }}>
+      <div className="flex items-center gap-3 px-6 py-4" style={{ borderTop: '1px solid rgba(144, 104, 20, 0.08)' }}>
         <Link href={`/skills/${skill.slug}`} className="font-dot" style={{ fontSize: '14px', fontWeight: 700, color: 'var(--sdv-teal)' }}>
-          产品详情 →
+          查看装备 →
         </Link>
         <div className="flex items-center gap-2 ml-auto">
           {skill.officialUrl ? (

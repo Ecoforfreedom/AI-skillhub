@@ -38,21 +38,21 @@ export default function Footer() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 pb-8" style={{ borderBottom: '1px solid rgba(151, 184, 255, 0.1)' }}>
           <div className="max-w-2xl">
             <div className="sdv-chip inline-flex items-center font-dot" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sdv-silver)' }}>
-              AI Tooling Intelligence
+              Safe Zone
             </div>
             <h2 className="font-pixel mt-5" style={{ fontSize: 'clamp(28px, 3vw, 40px)', color: 'var(--sdv-cream)' }}>
-              用更产品化的方式管理团队的 AI 工具栈
+              用更轻的游戏风格整理 AI 工具
             </h2>
             <p className="font-dot mt-3" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.8 }}>
-              从发现、筛选到建立共识，把不断出现的新工具整理成能服务业务团队的决策界面。
+              保留清晰分类和筛选逻辑，但把浏览体验做得更像一块简洁的任务面板。
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/skills" className="sdv-btn" style={{ minHeight: 46 }}>
-              浏览工具目录
+              打开工具栏
             </Link>
-            <Link href="/rankings" className="sdv-btn" style={{ minHeight: 46, background: 'rgba(9, 18, 34, 0.28)', color: 'var(--sdv-silver)' }}>
-              查看高分榜单
+            <Link href="/rankings" className="sdv-btn" style={{ minHeight: 46, background: 'rgba(255, 248, 219, 0.92)', color: 'var(--sdv-silver)', boxShadow: 'none' }}>
+              查看排行
             </Link>
           </div>
         </div>
@@ -66,8 +66,8 @@ export default function Footer() {
                     width: 14,
                     height: 14,
                     borderRadius: '999px',
-                    background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-blue))',
-                    boxShadow: '0 0 18px rgba(124, 230, 255, 0.4)',
+                    background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-gold))',
+                    boxShadow: '0 0 14px rgba(212, 151, 18, 0.28)',
                   }}
                 />
               </span>
@@ -76,7 +76,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)', lineHeight: 1.8, maxWidth: 320 }}>
-              为团队提供结构化的 AI 工具发现、岗位导航和知识网络，让新工具从噪音变成可执行的工作流资产。
+              把工具发现、角色筛选和排行榜放进一套更轻量、更好浏览的黄色面板里。
             </p>
           </div>
 
@@ -100,7 +100,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(151, 184, 255, 0.1)' }}>
           <p className="font-dot" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
-            © 2026 AI Skill Radar. Designed for high-signal AI tooling discovery.
+            © 2026 AI Skill Radar. Yellow game-style UI edition.
           </p>
           <Link href="/admin" className="sdv-btn" style={{ minHeight: 42, fontSize: '14px' }}>
             Admin Console

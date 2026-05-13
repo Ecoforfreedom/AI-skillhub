@@ -72,11 +72,9 @@ export default function Header() {
             gap: 14,
             padding: '12px 14px',
             borderRadius: 999,
-            background: 'rgba(6, 13, 25, 0.78)',
-            border: '1px solid rgba(151, 184, 255, 0.14)',
-            boxShadow: '0 24px 80px rgba(2, 6, 23, 0.34)',
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
+            background: 'rgba(255, 249, 223, 0.94)',
+            border: '1px solid rgba(135, 98, 20, 0.16)',
+            boxShadow: '0 14px 30px rgba(126, 90, 16, 0.12)',
           }}
         >
           <Link href="/" className="flex items-center gap-3 shrink-0 min-w-0" style={{ paddingInline: 6 }}>
@@ -86,8 +84,8 @@ export default function Header() {
                   width: 16,
                   height: 16,
                   borderRadius: '999px',
-                  background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-blue))',
-                  boxShadow: '0 0 18px rgba(124, 230, 255, 0.42)',
+                  background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-gold))',
+                  boxShadow: '0 0 14px rgba(212, 151, 18, 0.34)',
                 }}
               />
             </span>
@@ -96,7 +94,7 @@ export default function Header() {
                 AI Skill Radar
               </span>
               <span className="hidden xl:block font-dot truncate" style={{ fontSize: '12px', color: 'var(--sdv-dim)' }}>
-                Curated tooling intelligence for modern teams
+                yellow quest board for AI tools
               </span>
             </span>
           </Link>
@@ -120,8 +118,8 @@ export default function Header() {
                     letterSpacing: '-0.02em',
                     whiteSpace: 'nowrap',
                     color: active ? 'var(--sdv-cream)' : 'var(--sdv-dim)',
-                    background: active ? 'rgba(126, 166, 255, 0.12)' : 'transparent',
-                    border: active ? '1px solid rgba(124, 230, 255, 0.18)' : '1px solid transparent',
+                    background: active ? 'rgba(255, 232, 145, 0.86)' : 'transparent',
+                    border: active ? '1px solid rgba(149, 103, 18, 0.18)' : '1px solid transparent',
                     borderRadius: 999,
                     transition: 'color 220ms ease, transform 220ms ease, border-color 220ms ease, background 220ms ease',
                   }}
@@ -135,8 +133,8 @@ export default function Header() {
                       bottom: 4,
                       height: 2,
                       borderRadius: 999,
-                      background: active ? 'linear-gradient(90deg, var(--sdv-teal), var(--sdv-blue))' : 'transparent',
-                      boxShadow: active ? '0 0 16px rgba(124, 230, 255, 0.35)' : 'none',
+                      background: active ? 'linear-gradient(90deg, var(--sdv-teal), var(--sdv-gold))' : 'transparent',
+                      boxShadow: active ? '0 0 12px rgba(212, 151, 18, 0.22)' : 'none',
                     }}
                   />
                 </Link>
@@ -214,7 +212,7 @@ export default function Header() {
                   className="block px-4 py-3 font-dot text-center"
                   style={{ fontSize: '14px', color: 'var(--sdv-teal)' }}
                 >
-                  查看全部结果
+                  打开完整列表
                 </Link>
               </div>
             )}
@@ -227,8 +225,9 @@ export default function Header() {
               style={{
                 minHeight: 46,
                 paddingInline: 18,
-                background: 'linear-gradient(180deg, rgba(244, 248, 255, 0.96) 0%, rgba(212, 224, 255, 0.92) 100%)',
-                color: '#09111f',
+                background: isHome ? 'linear-gradient(180deg, rgba(255, 214, 94, 0.98) 0%, rgba(237, 181, 44, 0.98) 100%)' : 'rgba(255, 248, 219, 0.92)',
+                color: 'var(--sdv-cream)',
+                boxShadow: isHome ? '0 12px 24px rgba(154, 112, 24, 0.18)' : 'none',
               }}
             >
               {isHome ? '开始探索' : '查看榜单'}
@@ -321,7 +320,7 @@ export default function Header() {
                     fontWeight: 600,
                     color: active ? 'var(--sdv-cream)' : 'var(--sdv-dim)',
                     borderRadius: 18,
-                    background: active ? 'rgba(124, 230, 255, 0.08)' : 'transparent',
+                    background: active ? 'rgba(255, 232, 145, 0.86)' : 'transparent',
                   }}
                 >
                   {link.label}
