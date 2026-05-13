@@ -20,6 +20,13 @@ function tierStripe(score: number): string {
 export default function SkillCard({ skill, compact = false, index = 0 }: Props) {
   const pricingInfo = PRICING_LABELS[skill.pricingType || 'unknown']
   const stripeColor = skill.score != null && skill.score > 0 ? tierStripe(skill.score) : '#eee'
+  const pricingBadge = skill.isOpenSource || skill.pricingType === 'open_source'
+    ? { label: '开源', background: '#00C853', color: '#fff' }
+    : skill.pricingType === 'paid'
+      ? { label: pricingInfo?.label || '付费', background: '#FF6B00', color: '#fff' }
+      : pricingInfo
+        ? { label: pricingInfo.label, background: '#FFD600', color: '#000' }
+        : null
 
   const roleLabels = skill.roleCategories
     .slice(0, 2)
@@ -113,14 +120,9 @@ export default function SkillCard({ skill, compact = false, index = 0 }: Props) 
               {(category as { icon: string }).icon} {(category as { name: string }).name}
             </span>
           ))}
-          {pricingInfo ? (
-            <span className="font-dot ml-auto" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', padding: '3px 8px', border: '2px solid #000', borderRadius: 3, background: '#FF6B00', color: '#fff', boxShadow: '2px 2px 0 #000' }}>
-              {pricingInfo.label}
-            </span>
-          ) : null}
-          {skill.isOpenSource ? (
-            <span className="font-dot" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', padding: '3px 8px', border: '2px solid #000', borderRadius: 3, background: '#00C853', color: '#fff', boxShadow: '2px 2px 0 #000' }}>
-              开源
+          {pricingBadge ? (
+            <span className="font-dot ml-auto" style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', padding: '3px 8px', border: '2px solid #000', borderRadius: 3, background: pricingBadge.background, color: pricingBadge.color, boxShadow: '2px 2px 0 #000' }}>
+              {pricingBadge.label}
             </span>
           ) : null}
         </div>
