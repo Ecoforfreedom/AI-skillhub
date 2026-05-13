@@ -14,7 +14,7 @@ import {
 import prisma from '@/lib/db'
 import { CATEGORIES, DIFFICULTY_LABELS, PRICING_LABELS, ROLES } from '@/lib/constants'
 import { ensureSeeded } from '@/lib/seed'
-import { formatDate, formatNumber } from '@/lib/utils'
+import { displaySkillName, displaySkillText, formatDate, formatNumber } from '@/lib/utils'
 import SkillCard from '@/components/skills/SkillCard'
 
 export const dynamic = 'force-dynamic'
@@ -63,6 +63,9 @@ export default async function SkillDetailPage({ params }: { params: { id: string
   const categories = skill.functionCategories.map(id => CATEGORIES.find(category => category.id === id)).filter(Boolean)
   const difficulty = DIFFICULTY_LABELS[skill.difficulty || 'intermediate']
   const pricing = PRICING_LABELS[skill.pricingType || 'unknown']
+  const skillName = displaySkillName(skill.name)
+  const oneLiner = displaySkillText(skill.oneLiner)
+  const chineseSummary = displaySkillText(skill.chineseSummary)
 
   return (
     <div className="container py-8 max-w-6xl">
@@ -71,7 +74,7 @@ export default async function SkillDetailPage({ params }: { params: { id: string
           <ArrowLeft className="h-3 w-3" /> 全部工具
         </Link>
         <span>▸</span>
-        <span>{skill.name}</span>
+        <span>{skillName}</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -83,11 +86,11 @@ export default async function SkillDetailPage({ params }: { params: { id: string
               </div>
               <div className="min-w-0 flex-1">
                 <h1 className="font-pixel" style={{ fontSize: '13px', color: 'var(--sdv-cream)' }}>
-                  {skill.name}
+                  {skillName}
                 </h1>
-                {skill.oneLiner ? (
+                {oneLiner ? (
                   <p className="font-dot mt-3" style={{ fontSize: '18px', color: 'var(--sdv-warm)', lineHeight: 1.7 }}>
-                    {skill.oneLiner}
+                    {oneLiner}
                   </p>
                 ) : null}
                 <div className="mt-4 flex flex-wrap gap-2">
@@ -130,10 +133,10 @@ export default async function SkillDetailPage({ params }: { params: { id: string
             </div>
           </div>
 
-          {skill.chineseSummary ? (
+          {chineseSummary ? (
             <SectionFrame title="这个工具是什么" icon="📋">
               <p className="font-dot" style={{ fontSize: '17px', color: 'var(--sdv-cream)', lineHeight: 1.8 }}>
-                {skill.chineseSummary}
+                {chineseSummary}
               </p>
             </SectionFrame>
           ) : null}

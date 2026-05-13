@@ -2,6 +2,7 @@ import Link from 'next/link'
 import prisma from '@/lib/db'
 import { CATEGORIES } from '@/lib/constants'
 import { ensureSeeded } from '@/lib/seed'
+import { displaySkillName } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 300
@@ -28,7 +29,7 @@ async function getCategoryStats() {
       .filter(skill => skill.functionCategories.includes(category.id))
       .sort((left, right) => (right.score || 0) - (left.score || 0))
       .slice(0, 3)
-      .map(skill => ({ name: skill.name, slug: skill.slug }))
+      .map(skill => ({ name: displaySkillName(skill.name), slug: skill.slug }))
   }
 
   return { counts, topTools }

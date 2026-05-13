@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Menu, Search, X } from 'lucide-react'
+import { displaySkillName, displaySkillText } from '@/lib/utils'
 
 const NAV_LINKS = [
   { href: '/skills', label: '全部工具' },
@@ -161,10 +162,10 @@ export default function Header() {
                   >
                     <div className="min-w-0 flex-1">
                       <p className="font-pixel truncate" style={{ fontSize: '14px', color: 'var(--sdv-cream)' }}>
-                        {result.name}
+                        {displaySkillName(result.name)}
                       </p>
                       <p className="font-dot truncate" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
-                        {result.oneLiner}
+                        {displaySkillText(result.oneLiner)}
                       </p>
                     </div>
                     {result.score ? (
@@ -254,10 +255,10 @@ export default function Header() {
                   >
                     <div className="min-w-0 flex-1">
                       <p className="font-pixel truncate" style={{ fontSize: '16px', color: '#000' }}>
-                        {result.name}
+                        {displaySkillName(result.name)}
                       </p>
                       <p className="font-dot truncate" style={{ fontSize: '12px', color: '#555' }}>
-                        {result.oneLiner}
+                        {displaySkillText(result.oneLiner)}
                       </p>
                     </div>
                   </Link>

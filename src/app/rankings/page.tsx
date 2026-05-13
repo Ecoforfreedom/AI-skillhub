@@ -2,6 +2,7 @@ import Link from 'next/link'
 import prisma from '@/lib/db'
 import { PRICING_LABELS } from '@/lib/constants'
 import { ensureSeeded } from '@/lib/seed'
+import { displaySkillName, displaySkillText } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 300
@@ -89,11 +90,11 @@ export default async function RankingsPage() {
                         </span>
                         <div className="min-w-0 flex-1">
                           <p className="font-pixel truncate" style={{ fontSize: '7px', color: 'var(--sdv-cream)' }}>
-                            {skill.name}
+                            {displaySkillName(skill.name)}
                           </p>
                           {skill.oneLiner ? (
                             <p className="font-dot truncate" style={{ fontSize: '15px', color: 'var(--sdv-dim)' }}>
-                              {skill.oneLiner}
+                              {displaySkillText(skill.oneLiner)}
                             </p>
                           ) : null}
                         </div>

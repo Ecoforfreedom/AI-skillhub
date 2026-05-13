@@ -3,7 +3,7 @@ import prisma from '@/lib/db'
 import { ROLES, CATEGORIES } from '@/lib/constants'
 import SkillCard from '@/components/skills/SkillCard'
 import AnimatedCounter from '@/components/ui/AnimatedCounter'
-import { formatNumber } from '@/lib/utils'
+import { displaySkillName, displaySkillText, formatNumber } from '@/lib/utils'
 import { ensureSeeded } from '@/lib/seed'
 
 export const dynamic = 'force-dynamic'
@@ -182,7 +182,7 @@ export default async function HomePage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-4">
                         <p className="font-pixel truncate" style={{ fontSize: '20px', color: '#000' }}>
-                          {skill.name}
+                          {displaySkillName(skill.name)}
                         </p>
                         <span
                           className="font-dot shrink-0"
@@ -192,7 +192,7 @@ export default async function HomePage() {
                         </span>
                       </div>
                       <p className="font-dot mt-1 line-clamp-2" style={{ fontSize: '12px', color: '#555', lineHeight: 1.65 }}>
-                        {skill.oneLiner || skill.chineseSummary || '高信号 AI 工具'}
+                        {displaySkillText(skill.oneLiner || skill.chineseSummary || '高信号 AI 工具')}
                       </p>
                     </div>
                   </Link>

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ExternalLink, Github } from 'lucide-react'
-import { truncate, formatNumber } from '@/lib/utils'
+import { displaySkillName, displaySkillText, truncate, formatNumber } from '@/lib/utils'
 import { ROLES, CATEGORIES } from '@/lib/constants'
 import type { SkillListItem } from '@/types'
 
@@ -18,6 +18,9 @@ function tierStripe(score: number): string {
 }
 
 export default function SkillCard({ skill, compact = false, index = 0 }: Props) {
+  const name = displaySkillName(skill.name)
+  const oneLiner = displaySkillText(skill.oneLiner)
+  const chineseSummary = displaySkillText(skill.chineseSummary)
   const stripeColor = skill.score != null && skill.score > 0 ? tierStripe(skill.score) : '#eee'
   const pricingBadge = skill.isOpenSource || skill.pricingType === 'open_source'
     ? { label: '开源', background: '#00C853', color: '#fff' }
@@ -54,12 +57,12 @@ export default function SkillCard({ skill, compact = false, index = 0 }: Props) 
           <div className="min-w-0 flex-1">
             <Link href={`/skills/${skill.slug}`}>
               <h3 className="font-pixel" style={{ fontSize: '26px', color: '#000', letterSpacing: '0.02em' }}>
-                {skill.name}
+                {name}
               </h3>
             </Link>
-            {skill.oneLiner ? (
+            {oneLiner ? (
               <p className="font-dot mt-1 line-clamp-2" style={{ color: '#444', fontSize: '13px', lineHeight: 1.6 }}>
-                {truncate(skill.oneLiner, 72)}
+                {truncate(oneLiner, 72)}
               </p>
             ) : null}
           </div>
@@ -90,9 +93,9 @@ export default function SkillCard({ skill, compact = false, index = 0 }: Props) 
           </div>
         ) : null}
 
-        {!compact && skill.chineseSummary ? (
+        {!compact && chineseSummary ? (
           <p className="font-dot line-clamp-3" style={{ color: '#555', fontSize: '13px', lineHeight: 1.65 }}>
-            {skill.chineseSummary}
+            {chineseSummary}
           </p>
         ) : null}
 

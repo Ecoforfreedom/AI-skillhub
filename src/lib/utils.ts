@@ -39,6 +39,14 @@ export function truncate(str: string | null | undefined, max: number): string {
   return str.slice(0, max) + '...'
 }
 
+export function displaySkillName(name: string | null | undefined): string {
+  return (name || '').replace(/^Agent Arsenal\s+/i, '')
+}
+
+export function displaySkillText(text: string | null | undefined): string {
+  return (text || '').replace(/\bAgent Arsenal\s+/gi, '')
+}
+
 export function scoreColor(score: number | null | undefined): string {
   const s = score || 0
   if (s >= 90) return 'text-green-400'
