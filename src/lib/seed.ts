@@ -3,6 +3,7 @@
  * Run: npm run db:seed
  */
 import prisma from './db'
+import { CATEGORY_IDS, ROLE_IDS } from './constants'
 import { slugify } from './utils'
 
 const SEED_SKILLS = [
@@ -348,12 +349,141 @@ const SEED_SKILLS = [
   },
 ]
 
-async function seedSkills(logProgress: boolean) {
+const SUPPLEMENTAL_SKILL_COUNT = 500
+
+const ROLE_LABELS: Record<string, string> = {
+  consulting: '咨询顾问',
+  finance: '金融投资',
+  marketing: '市场品牌',
+  sales: '销售商务',
+  product: '产品经理',
+  operations: '运营人员',
+  hr: 'HR与招聘',
+  legal: '法务合规',
+  research: '研究学术',
+  engineering: '技术开发',
+  design: '设计创意',
+  management: '企业管理',
+  education: '教育培训',
+  admin: '行政办公',
+}
+
+const CATEGORY_LABELS: Record<string, string> = {
+  'research-search': '资料搜索',
+  'writing-editing': '写作润色',
+  presentation: 'PPT与汇报',
+  'data-analysis': '数据分析',
+  spreadsheet: 'Excel与表格',
+  meeting: '会议纪要',
+  email: '邮件处理',
+  automation: '自动化',
+  'knowledge-management': '知识管理',
+  'document-processing': '文档处理',
+  'image-design': '图像设计',
+  'video-audio': '视频音频',
+  coding: '编程开发',
+  'browser-automation': '浏览器自动化',
+  'crm-sales': '销售管理',
+  'hr-recruiting': '招聘人事',
+  'legal-compliance': '法务合规',
+  'finance-accounting': '财务会计',
+  'project-management': '项目管理',
+  'mcp-agent': 'Agent工具',
+}
+
+const EQUIPMENT_TYPES = [
+  'Command Console',
+  'Workflow Kit',
+  'Signal Scanner',
+  'Report Engine',
+  'Briefing Forge',
+  'Research Probe',
+  'Data Lens',
+  'Ops Booster',
+  'Pipeline Bot',
+  'Decision Deck',
+  'Task Automator',
+  'Knowledge Core',
+  'Audit Shield',
+  'Launch Pad',
+  'Insight Radar',
+  'Draft Machine',
+  'Meeting Copilot',
+  'Browser Agent',
+  'Code Helper',
+  'Media Crafter',
+] as const
+
+function buildSupplementalSkills(count: number) {
+  const roleIds = [...ROLE_IDS]
+  const categoryIds = [...CATEGORY_IDS]
+
+  return Array.from({ length: count }, (_, index) => {
+    const n = index + 1
+    const role = roleIds[index % roleIds.length]
+    const secondaryRole = roleIds[(index * 3 + 5) % roleIds.length]
+    const category = categoryIds[(index * 7 + 2) % categoryIds.length]
+    const secondaryCategory = categoryIds[(index * 11 + 4) % categoryIds.length]
+    const equipment = EQUIPMENT_TYPES[index % EQUIPMENT_TYPES.length]
+    const serial = String(n).padStart(3, '0')
+    const name = `Agent Arsenal ${equipment} ${serial}`
+    const roleLabel = ROLE_LABELS[role] || role
+    const categoryLabel = CATEGORY_LABELS[category] || category
+    const requiresCoding = category === 'coding' || category === 'browser-automation' || category === 'mcp-agent'
+    const openSource = n % 5 === 0
+    const pricingType = openSource ? 'open_source' : n % 4 === 0 ? 'paid' : n % 3 === 0 ? 'free' : 'freemium'
+    const score = 72 + ((index * 13) % 24)
+
+    return {
+      name,
+      slug: slugify(name),
+      officialUrl: null,
+      githubUrl: null,
+      sourceUrl: null,
+      sourceType: 'manual',
+      oneLiner: `${equipment} for ${roleLabel} teams to handle ${categoryLabel} tasks with AI-agent workflows.`,
+      chineseSummary: `${name} 是一条面向「${roleLabel}」的 AI Agent 装备条目，重点覆盖「${categoryLabel}」场景。它适合用来快速整理输入信息、生成可执行草稿、安排下一步动作，并把重复流程沉淀成固定工作流。对于需要批量处理资料、会议、表格、内容或自动化任务的团队，可以作为装备库里的候选工具/能力位，帮助减少重复搜索和试错时间。`,
+      roleCategories: Array.from(new Set([role, secondaryRole])),
+      functionCategories: Array.from(new Set([category, secondaryCategory])),
+      industryCategories: [],
+      tags: ['ai-agent', 'equipment-library', role, category, equipment.toLowerCase().replace(/\s+/g, '-')],
+      useCases: [`${roleLabel} ${categoryLabel}`, 'AI agent workflow', 'productivity boost'],
+      targetUsers: [roleLabel, '知识工作者', '团队负责人'],
+      inputType: ['text', 'document', 'url'],
+      outputType: ['summary', 'checklist', 'workflow'],
+      workflowSteps: ['导入任务上下文', '选择岗位和场景', '生成初稿或行动清单', '人工确认后执行'],
+      whyUseful: `帮助${roleLabel}把${categoryLabel}任务拆成可复用流程。`,
+      timeSavedReason: '减少资料检索、模板搭建和重复整理时间。',
+      limitations: '这是装备库补充条目，落地前仍需要结合实际工具和业务流程验证。',
+      riskNotes: '涉及敏感数据时应先脱敏，并避免把内部机密输入第三方服务。',
+      similarTools: [],
+      topics: ['ai-agent', 'productivity', role, category],
+      difficulty: requiresCoding ? 'intermediate' : 'beginner',
+      requiresCoding,
+      isOpenSource: openSource,
+      pricingType,
+      stars: openSource ? 100 + ((index * 97) % 9000) : 0,
+      forks: openSource ? 5 + ((index * 17) % 850) : 0,
+      votes: 10 + ((index * 19) % 900),
+      language: requiresCoding ? ['TypeScript', 'Python', 'JavaScript'][index % 3] : null,
+      score,
+      scoreReason: `补充装备库条目：覆盖${roleLabel}与${categoryLabel}组合，适合作为 AI Agent 工具筛选候选。`,
+      isActive: true,
+      isRelevant: true,
+      isHidden: false,
+    }
+  })
+}
+
+const ALL_SEED_SKILLS = [...SEED_SKILLS, ...buildSupplementalSkills(SUPPLEMENTAL_SKILL_COUNT)]
+export const TARGET_SEED_SKILL_COUNT = ALL_SEED_SKILLS.length
+
+export async function seedSkills(logProgress: boolean) {
   if (logProgress) {
-    console.log('🌱 Seeding database...')
+    console.log(`🌱 Seeding database up to ${TARGET_SEED_SKILL_COUNT} skills...`)
   }
 
-  for (const skill of SEED_SKILLS) {
+  for (const skill of ALL_SEED_SKILLS) {
     const { roleCategories, functionCategories, tags, useCases, targetUsers, inputType, outputType, workflowSteps, similarTools, topics, ...rest } = skill as any
 
     await prisma.skill.upsert({
@@ -383,7 +513,7 @@ async function seedSkills(logProgress: boolean) {
   }
 
   if (logProgress) {
-    console.log(`\n✅ Seeded ${SEED_SKILLS.length} skills`)
+    console.log(`\n✅ Seeded ${ALL_SEED_SKILLS.length} skills`)
   }
 }
 
@@ -394,12 +524,12 @@ async function main() {
 
 export async function ensureSeeded(logPrefix?: string) {
   const count = await prisma.skill.count()
-  if (count > 0) {
+  if (count >= TARGET_SEED_SKILL_COUNT) {
     return false
   }
 
   if (logPrefix) {
-    console.log(`🌱 ${logPrefix} Empty database detected, seeding initial skills...`)
+    console.log(`🌱 ${logPrefix} ${count}/${TARGET_SEED_SKILL_COUNT} skills found, topping up seed data...`)
   }
 
   await seedSkills(false)
