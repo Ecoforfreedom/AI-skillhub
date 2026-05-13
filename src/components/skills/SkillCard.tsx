@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ExternalLink, Github } from 'lucide-react'
 import { truncate, formatNumber } from '@/lib/utils'
-import { ROLES, CATEGORIES, PRICING_LABELS } from '@/lib/constants'
+import { ROLES, CATEGORIES } from '@/lib/constants'
 import type { SkillListItem } from '@/types'
 
 interface Props {
@@ -18,15 +18,10 @@ function tierStripe(score: number): string {
 }
 
 export default function SkillCard({ skill, compact = false, index = 0 }: Props) {
-  const pricingInfo = PRICING_LABELS[skill.pricingType || 'unknown']
   const stripeColor = skill.score != null && skill.score > 0 ? tierStripe(skill.score) : '#eee'
   const pricingBadge = skill.isOpenSource || skill.pricingType === 'open_source'
     ? { label: '开源', background: '#00C853', color: '#fff' }
-    : skill.pricingType === 'paid'
-      ? { label: pricingInfo?.label || '付费', background: '#FF6B00', color: '#fff' }
-      : pricingInfo
-        ? { label: pricingInfo.label, background: '#FFD600', color: '#000' }
-        : null
+    : { label: '付费', background: '#FF6B00', color: '#fff' }
 
   const roleLabels = skill.roleCategories
     .slice(0, 2)
