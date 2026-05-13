@@ -136,24 +136,12 @@ export default async function HomePage() {
               <Link
                 key={role.id}
                 href={`/skills?role=${role.id}`}
-                className="flex items-center gap-1.5 font-dot text-sm sdv-panel"
+                className="flex items-center gap-1.5 font-dot text-sm sdv-panel sdv-panel-hover"
                 style={{
                   padding: '6px 12px',
                   color: 'var(--sdv-warm)',
                   textDecoration: 'none',
                   transition: 'all 0.1s',
-                }}
-                onMouseOver={e => {
-                  const element = e.currentTarget as HTMLElement
-                  element.style.color = 'var(--sdv-teal)'
-                  element.style.borderColor = 'var(--sdv-teal)'
-                  element.style.boxShadow = '3px 3px 0 var(--sdv-sh), inset 2px 2px 0 var(--sdv-teal), inset -2px -2px 0 var(--sdv-sh)'
-                }}
-                onMouseOut={e => {
-                  const element = e.currentTarget as HTMLElement
-                  element.style.color = 'var(--sdv-warm)'
-                  element.style.borderColor = 'var(--sdv-border)'
-                  element.style.boxShadow = '3px 3px 0 var(--sdv-sh), inset 2px 2px 0 var(--sdv-hi), inset -2px -2px 0 var(--sdv-sh)'
                 }}
               >
                 <span>{role.icon}</span>
