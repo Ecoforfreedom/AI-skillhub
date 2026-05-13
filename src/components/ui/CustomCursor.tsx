@@ -17,6 +17,7 @@ export default function CustomCursor() {
     let mx = -200, my = -200
     let rx = -200, ry = -200
     let isHover = false
+    let isFormControl = false
     let raf: number
 
     const onMove = (e: MouseEvent) => {
@@ -25,12 +26,17 @@ export default function CustomCursor() {
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${mx - 5}px, ${my - 5}px)`
       }
-      isHover = !!(e.target as HTMLElement)?.closest('a, button, [role="button"], input, select, textarea')
+      const target = e.target as HTMLElement
+      isFormControl = !!target?.closest('input, select, textarea')
+      isHover = !!target?.closest('a, button, [role="button"]') || isFormControl
     }
 
     const loop = () => {
       rx += (mx - rx) * 0.14
       ry += (my - ry) * 0.14
+      if (dotRef.current) {
+        dotRef.current.style.opacity = isFormControl ? '0' : '1'
+      }
       if (ringRef.current) {
         const size = isHover ? 48 : 36
         ringRef.current.style.transform = `translate(${rx - size / 2}px, ${ry - size / 2}px)`
@@ -38,6 +44,7 @@ export default function CustomCursor() {
         ringRef.current.style.height = size + 'px'
         ringRef.current.style.borderColor = isHover ? '#FFD600' : '#000'
         ringRef.current.style.borderWidth = isHover ? '3px' : '2px'
+        ringRef.current.style.opacity = isFormControl ? '0' : '1'
       }
       raf = requestAnimationFrame(loop)
     }
@@ -67,6 +74,7 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           zIndex: 99999,
           willChange: 'transform',
+          transition: 'opacity 0.12s ease',
         }}
       />
       {/* Ring — lags behind */}
@@ -81,7 +89,7 @@ export default function CustomCursor() {
           pointerEvents: 'none',
           zIndex: 99998,
           willChange: 'transform',
-          transition: 'width 0.15s ease, height 0.15s ease, border-color 0.15s ease, border-width 0.15s ease',
+          transition: 'width 0.15s ease, height 0.15s ease, border-color 0.15s ease, border-width 0.15s ease, opacity 0.12s ease',
         }}
       />
     </>
