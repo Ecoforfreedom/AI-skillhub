@@ -125,9 +125,11 @@ export default function SkillFilters() {
                       className={cn('font-dot px-2.5 py-1.5 transition-colors', active ? '' : '')}
                       style={{
                         fontSize: '15px',
-                        border: `2px solid ${active ? 'var(--sdv-teal)' : 'var(--sdv-border)'}`,
-                        color: active ? 'var(--sdv-teal)' : 'var(--sdv-warm)',
-                        background: active ? 'rgba(80,200,160,0.08)' : 'rgba(14,9,24,0.45)',
+                        fontWeight: 700,
+                        border: '2px solid #000',
+                        color: active ? '#FFD600' : '#000',
+                        background: active ? '#000' : '#FFD600',
+                        boxShadow: active ? '2px 2px 0 #000' : 'none',
                       }}
                     >
                       {option.icon ? `${option.icon} ` : ''}
@@ -167,9 +169,11 @@ export default function SkillFilters() {
               className="w-full flex items-center gap-2 font-dot px-2 py-1.5"
               style={{
                 fontSize: '15px',
-                color: active ? 'var(--sdv-teal)' : 'var(--sdv-warm)',
-                border: `2px solid ${active ? 'var(--sdv-teal)' : 'var(--sdv-border)'}`,
-                background: active ? 'rgba(80,200,160,0.08)' : 'rgba(14,9,24,0.45)',
+                fontWeight: 700,
+                color: active ? '#FFD600' : '#000',
+                border: '2px solid #000',
+                background: active ? '#000' : '#FFD600',
+                boxShadow: active ? '2px 2px 0 #000' : 'none',
               }}
             >
               <span className="sdv-slot flex items-center justify-center shrink-0" style={{ width: 20, height: 20, fontSize: 10 }}>
