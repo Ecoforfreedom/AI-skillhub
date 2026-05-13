@@ -10,16 +10,16 @@ interface Props {
   index?: number
 }
 
-function tierInfo(score: number): { label: string; bg: string; color: string; stripe: string } {
-  if (score >= 90) return { label: 'TOP PICK', bg: '#00C853', color: '#fff', stripe: '#00C853' }
-  if (score >= 80) return { label: 'HIGH SIGNAL', bg: '#FF6B00', color: '#fff', stripe: '#FF6B00' }
-  if (score >= 70) return { label: 'USEFUL', bg: '#FFD600', color: '#000', stripe: '#FFD600' }
-  return { label: 'INDEXED', bg: '#fff', color: '#000', stripe: '#ddd' }
+function tierStripe(score: number): string {
+  if (score >= 90) return '#00C853'
+  if (score >= 80) return '#FF6B00'
+  if (score >= 70) return '#FFD600'
+  return '#ddd'
 }
 
 export default function SkillCard({ skill, compact = false, index = 0 }: Props) {
   const pricingInfo = PRICING_LABELS[skill.pricingType || 'unknown']
-  const tier = skill.score != null && skill.score > 0 ? tierInfo(skill.score) : null
+  const stripeColor = skill.score != null && skill.score > 0 ? tierStripe(skill.score) : '#eee'
 
   const roleLabels = skill.roleCategories
     .slice(0, 2)
@@ -41,30 +41,7 @@ export default function SkillCard({ skill, compact = false, index = 0 }: Props) 
         '--card-i': index,
       } as React.CSSProperties}
     >
-      {/* Color-coded top stripe + tier badge */}
-      <div style={{ height: 6, background: tier ? tier.stripe : '#eee' }} />
-
-      {tier ? (
-        <div
-          className="absolute top-4 right-4 font-dot"
-          style={{
-            fontSize: '10px',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            padding: '5px 9px',
-            background: tier.bg,
-            color: tier.color,
-            border: '2px solid #000',
-            borderRadius: 3,
-            boxShadow: '2px 2px 0 #000',
-            zIndex: 2,
-            animation: 'popIn 0.5s cubic-bezier(0.22,1,0.36,1) both',
-            animationDelay: `${150 + index * 65}ms`,
-          }}
-        >
-          {tier.label}
-        </div>
-      ) : null}
+      <div style={{ height: 6, background: stripeColor }} />
 
       <div className="p-5 flex flex-col gap-3 flex-1">
         <div className="flex gap-3 items-start">
@@ -72,7 +49,7 @@ export default function SkillCard({ skill, compact = false, index = 0 }: Props) 
             {roleLabels[0] ? (roleLabels[0] as { icon: string }).icon : '🧰'}
           </div>
 
-          <div className="min-w-0 flex-1 pr-14">
+          <div className="min-w-0 flex-1">
             <Link href={`/skills/${skill.slug}`}>
               <h3 className="font-pixel" style={{ fontSize: '26px', color: '#000', letterSpacing: '0.02em' }}>
                 {skill.name}
