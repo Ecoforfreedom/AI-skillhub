@@ -35,6 +35,28 @@ export default function Footer() {
     <footer style={{ marginTop: 88, position: 'relative', zIndex: 1 }}>
       <div className="container">
         <div className="sdv-panel p-8 md:p-10" style={{ overflow: 'hidden' }}>
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 pb-8" style={{ borderBottom: '1px solid rgba(151, 184, 255, 0.1)' }}>
+          <div className="max-w-2xl">
+            <div className="sdv-chip inline-flex items-center font-dot" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sdv-silver)' }}>
+              AI Tooling Intelligence
+            </div>
+            <h2 className="font-pixel mt-5" style={{ fontSize: 'clamp(28px, 3vw, 40px)', color: 'var(--sdv-cream)' }}>
+              用更产品化的方式管理团队的 AI 工具栈
+            </h2>
+            <p className="font-dot mt-3" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.8 }}>
+              从发现、筛选到建立共识，把不断出现的新工具整理成能服务业务团队的决策界面。
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/skills" className="sdv-btn" style={{ minHeight: 46 }}>
+              浏览工具目录
+            </Link>
+            <Link href="/rankings" className="sdv-btn" style={{ minHeight: 46, background: 'rgba(9, 18, 34, 0.28)', color: 'var(--sdv-silver)' }}>
+              查看高分榜单
+            </Link>
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2 mb-4">
