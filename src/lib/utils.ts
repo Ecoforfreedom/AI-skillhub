@@ -40,11 +40,15 @@ export function truncate(str: string | null | undefined, max: number): string {
 }
 
 export function displaySkillName(name: string | null | undefined): string {
-  return (name || '').replace(/^Agent Arsenal\s+/i, '')
+  return (name || '')
+    .replace(/^Agent Arsenal\s+/i, '')
+    .replace(/\s+\d{3}$/g, '')
 }
 
 export function displaySkillText(text: string | null | undefined): string {
-  return (text || '').replace(/\bAgent Arsenal\s+/gi, '')
+  return (text || '')
+    .replace(/\bAgent Arsenal\s+/gi, '')
+    .replace(/\b(Command Console|Workflow Kit|Signal Scanner|Report Engine|Briefing Forge|Research Probe|Data Lens|Ops Booster|Pipeline Bot|Decision Deck|Task Automator|Knowledge Core|Audit Shield|Launch Pad|Insight Radar|Draft Machine|Meeting Copilot|Browser Agent|Code Helper|Media Crafter)\s+\d{3}\b/g, '$1')
 }
 
 export function scoreColor(score: number | null | undefined): string {
