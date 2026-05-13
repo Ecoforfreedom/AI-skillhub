@@ -56,22 +56,25 @@ export const PRICING_LABELS: Record<string, { label: string; color: string }> = 
   unknown:      { label: '待定',     color: 'bg-gray-500/10 text-gray-400 border-gray-500/20' },
 }
 
-export const GITHUB_QUERIES = [
-  'ai workflow productivity tool',
-  'mcp server claude ai',
-  'ai agent automation workflow',
-  'browser automation ai python',
-  'rag document ai tool',
-  'meeting transcription ai',
-  'ai writing assistant tool',
-  'ai presentation generator',
-  'n8n workflow automation',
-  'langchain agent tool',
-  'crewai multi agent',
-  'spreadsheet automation ai',
-  'document processing ai',
-  'chatgpt plugin tool python',
-  'ai research assistant tool',
+export interface GitHubSearchProfile {
+  name: string
+  query: string
+  minStars: number
+  pages: number
+  perPage: number
+}
+
+export const GITHUB_SEARCH_PROFILES: GitHubSearchProfile[] = [
+  { name: 'ai-productivity',        query: 'ai productivity assistant tool',         minStars: 300, pages: 2, perPage: 15 },
+  { name: 'ai-automation',          query: 'ai automation workflow tool',            minStars: 200, pages: 2, perPage: 15 },
+  { name: 'ai-agents',              query: 'ai agent orchestration tool',            minStars: 150, pages: 2, perPage: 15 },
+  { name: 'mcp-and-agents',         query: 'mcp server ai agent',                    minStars: 80,  pages: 2, perPage: 15 },
+  { name: 'ai-coding',              query: 'ai coding assistant developer tool',     minStars: 200, pages: 2, perPage: 15 },
+  { name: 'rag-and-search',         query: 'rag document search assistant',          minStars: 120, pages: 2, perPage: 15 },
+  { name: 'meeting-tools',          query: 'meeting transcription assistant ai',     minStars: 80,  pages: 2, perPage: 15 },
+  { name: 'browser-automation',     query: 'browser automation ai tool',             minStars: 80,  pages: 2, perPage: 15 },
+  { name: 'design-and-media',       query: 'ai design image generation tool',        minStars: 150, pages: 1, perPage: 15 },
+  { name: 'marketing-and-content',  query: 'ai marketing writing content tool',      minStars: 80,  pages: 1, perPage: 15 },
 ]
 
 export const AWESOME_LIST_URLS = [

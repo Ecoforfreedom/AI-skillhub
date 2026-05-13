@@ -7,5 +7,12 @@ export async function register() {
     } catch (e) {
       console.error('[instrumentation] auto-seed error:', e)
     }
+
+    try {
+      const { registerCrawlerScheduler } = await import('./lib/crawler/scheduler')
+      registerCrawlerScheduler()
+    } catch (e) {
+      console.error('[instrumentation] crawler scheduler error:', e)
+    }
   }
 }

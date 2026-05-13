@@ -58,12 +58,20 @@ export async function crawlAwesomeList(
         .toLowerCase()
         .slice(0, 120)
 
-      const existing = await prisma.skill.findUnique({ where: { slug } })
-
       // Determine if it's a GitHub URL
       const isGitHub = link.url.includes('github.com/')
       const githubUrl = isGitHub ? link.url : null
       const officialUrl = isGitHub ? null : link.url
+
+      const existing = await prisma.skill.findFirst({
+        where: {
+          OR: [
+            { slug },
+            { sourceUrl: link.url },
+            ...(githubUrl ? [{ githubUrl }] : []),
+          ],
+        },
+      })
 
       if (existing) {
         updated++

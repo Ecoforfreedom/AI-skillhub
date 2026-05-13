@@ -1,7 +1,7 @@
 import prisma from '../db'
 import { crawlGitHubQuery } from './github'
 import { crawlAwesomeList } from './awesome'
-import { GITHUB_QUERIES, AWESOME_LIST_URLS } from '../constants'
+import { GITHUB_SEARCH_PROFILES, AWESOME_LIST_URLS } from '../constants'
 
 export type CrawlSource = 'github' | 'awesome_lists' | 'all'
 
@@ -11,6 +11,7 @@ interface CrawlResult {
   found: number
   saved: number
   updated: number
+  ignored?: number
   error?: string
 }
 
@@ -19,13 +20,13 @@ export async function runCrawl(source: CrawlSource = 'all'): Promise<CrawlResult
 
   // GitHub crawl
   if (source === 'github' || source === 'all') {
-    for (const query of GITHUB_QUERIES) {
+    for (const profile of GITHUB_SEARCH_PROFILES) {
       const log = await prisma.crawlLog.create({
-        data: { source: 'github', query, status: 'running' },
+        data: { source: 'github', query: profile.name, status: 'running' },
       })
 
       try {
-        const res = await crawlGitHubQuery(query, log.id, 20)
+        const res = await crawlGitHubQuery(profile, log.id)
         await prisma.crawlLog.update({
           where: { id: log.id },
           data: {
@@ -33,17 +34,18 @@ export async function runCrawl(source: CrawlSource = 'all'): Promise<CrawlResult
             totalFound: res.found,
             totalSaved: res.saved,
             totalUpdated: res.updated,
+            totalIrrelevant: res.ignored,
             completedAt: new Date(),
           },
         })
-        results.push({ source: 'github', query, ...res })
+        results.push({ source: 'github', query: profile.name, ...res })
       } catch (err) {
         const msg = String(err)
         await prisma.crawlLog.update({
           where: { id: log.id },
           data: { status: 'failed', errorMessage: msg, completedAt: new Date() },
         })
-        results.push({ source: 'github', query, found: 0, saved: 0, updated: 0, error: msg })
+        results.push({ source: 'github', query: profile.name, found: 0, saved: 0, updated: 0, ignored: 0, error: msg })
       }
 
       // Rate limit between queries

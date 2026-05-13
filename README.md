@@ -193,7 +193,14 @@ x-admin-password: <ADMIN_PASSWORD>
 | `NEXT_PUBLIC_SITE_URL` | ✅ | 站点公开 URL（SEO 用） |
 | `OPENAI_BASE_URL` | ⬜ | 可选，兼容 Azure / 本地代理 |
 | `AI_MODEL` | ⬜ | 默认 `gpt-4o-mini`，可改为 `gpt-4o` 等 |
+| `ENABLE_AUTO_CRAWL` | ⬜ | 默认生产环境开启；设为 `false` 可关闭每日自动收录 |
+| `AUTO_CRAWL_CRON` | ⬜ | 每日自动收录 cron，默认 `0 3 * * *`（UTC） |
+| `AUTO_CRAWL_TIMEZONE` | ⬜ | 自动收录时区，默认 `UTC` |
+| `AUTO_ENRICH_LIMIT` | ⬜ | 每次自动富化的待处理技能数量，默认 `30` |
+| `AUTO_CRAWL_STALE_HOURS` | ⬜ | 若最近成功 crawl 超过该小时数，服务启动时补跑一次；默认 `20` |
 | `POSTGRES_PASSWORD` | ⬜ | Docker Compose 内部 DB 密码 |
+
+说明：Railway 上如果开启了休眠 / Serverless，cron 只有在容器存活时才会准点触发。本项目已经加了“启动后补跑一次”的兜底逻辑，但如果你想严格每天固定时刻执行，服务需要保持常驻。
 
 ---
 
@@ -253,6 +260,8 @@ nginx.conf
 - [x] Awesome Lists 爬虫（Markdown 解析）
 - [x] OpenAI AI 富化（分类/摘要/评分/岗位）
 - [x] 管理后台（Dashboard / 工具管理 / 爬取控制 / 日志）
+- [x] GitHub 高星仓库优先抓取（自动过滤教程/模板/awesome 列表噪音）
+- [x] 每日自动执行 crawl + enrich（服务常驻时生效）
 - [x] Docker Compose 一键部署
 - [x] 18 个预置种子工具
 - [x] 全站暗色主题
