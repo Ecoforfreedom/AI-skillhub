@@ -2,6 +2,7 @@ import Link from 'next/link'
 import prisma from '@/lib/db'
 import { ROLES, CATEGORIES } from '@/lib/constants'
 import SkillCard from '@/components/skills/SkillCard'
+import AnimatedCounter from '@/components/ui/AnimatedCounter'
 import { formatNumber } from '@/lib/utils'
 import { ensureSeeded } from '@/lib/seed'
 
@@ -57,7 +58,7 @@ function SdvSection({ icon, title, sub, linkHref, linkLabel, children }: {
   children: React.ReactNode
 }) {
   return (
-    <section className="page-enter" style={{ animationDelay: '120ms' }}>
+    <section className="page-enter reveal-section" style={{ animationDelay: '120ms' }}>
       <div className="flex items-end justify-between mb-8 gap-4 flex-wrap">
         <div>
           <div className="sdv-chip inline-flex items-center font-dot" style={{ marginBottom: 12 }}>
@@ -120,14 +121,16 @@ export default async function HomePage() {
 
               <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 max-w-5xl">
                 {[
-                  { label: 'TOOLS', value: formatNumber(totalSkills), hint: '每天自动补货' },
-                  { label: 'NEW THIS WEEK', value: `+${newThisWeek}`, hint: '新工具持续入库' },
-                  { label: 'ROLES', value: '14', hint: '按岗位分类' },
-                  { label: 'CATEGORIES', value: '20', hint: '支持快速筛选' },
-                ].map(item => (
-                  <div key={item.label} className="sdv-panel px-5 py-4 text-left">
+                  { label: 'TOOLS', value: totalSkills, suffix: '', hint: '每天自动补货' },
+                  { label: 'NEW THIS WEEK', value: newThisWeek, prefix: '+', hint: '新工具持续入库' },
+                  { label: 'ROLES', value: 14, suffix: '', hint: '按岗位分类' },
+                  { label: 'CATEGORIES', value: 20, suffix: '', hint: '支持快速筛选' },
+                ].map((item, i) => (
+                  <div key={item.label} className="sdv-panel px-5 py-4 text-left" style={{ animationDelay: `${i * 80}ms` }}>
                     <p className="font-dot" style={{ fontSize: '11px', fontWeight: 700, color: '#555', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{item.label}</p>
-                    <p className="font-pixel mt-2" style={{ fontSize: '38px', color: '#000', lineHeight: 1 }}>{item.value}</p>
+                    <p className="font-pixel mt-2" style={{ fontSize: '38px', color: '#000', lineHeight: 1 }}>
+                      <AnimatedCounter value={item.value} prefix={item.prefix} />
+                    </p>
                     <p className="font-dot mt-2" style={{ fontSize: '12px', color: '#888', letterSpacing: '0.02em' }}>{item.hint}</p>
                   </div>
                 ))}
@@ -214,8 +217,8 @@ export default async function HomePage() {
       <div className="container mt-20 space-y-20">
         <SdvSection icon="BOSS PICKS" title="精选工具" sub="高评分 AI 工具，优先上手，减少试错。" linkHref="/rankings" linkLabel="查看榜单">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {featuredSkills.map(skill => (
-              <SkillCard key={skill.id} skill={skill as any} />
+            {featuredSkills.map((skill, index) => (
+              <SkillCard key={skill.id} skill={skill as any} index={index} />
             ))}
           </div>
           {featuredSkills.length === 0 && (
@@ -276,8 +279,8 @@ export default async function HomePage() {
 
         <SdvSection icon="NEW DROP" title="最新入库" sub="持续更新的新工具列表，保持简洁不堆页面。" linkHref="/skills?sortBy=newest" linkLabel="更多">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {latestSkills.map(skill => (
-              <SkillCard key={skill.id} skill={skill as any} compact />
+            {latestSkills.map((skill, index) => (
+              <SkillCard key={skill.id} skill={skill as any} compact index={index} />
             ))}
           </div>
         </SdvSection>

@@ -6,6 +6,12 @@
 
 /* ─── Neo-Brutalist Design System (loot-drop.io inspired) ─── */
 
+/* Custom cursor — active when JS adds .custom-cursor-active to <html> */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
 @layer base {
   :root {
     /* Brand palette */
@@ -124,6 +130,68 @@
 @keyframes fadeUp {
   0%   { opacity: 0; transform: translateY(14px); }
   100% { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Boot / terminal ── */
+@keyframes bootLine {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@keyframes scanBeam {
+  0%   { top: -4px; opacity: 0.8; }
+  80%  { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ── Glitch ── */
+@keyframes glitchText {
+  0%   { transform: translate(0); clip-path: none; text-shadow: none; }
+  15%  { transform: translate(-4px, 2px); clip-path: inset(25% 0 45% 0); text-shadow: 4px 0 #ff004c, -4px 0 #00d4ff; }
+  30%  { transform: translate(4px, -2px); clip-path: inset(60% 0 8% 0);  text-shadow: -4px 0 #ff004c, 4px 0 #00d4ff; }
+  45%  { transform: translate(-2px, 1px); clip-path: inset(10% 0 70% 0); text-shadow: 2px 0 #ff004c; }
+  60%  { transform: translate(1px, -1px); clip-path: none; text-shadow: none; }
+  100% { transform: translate(0); clip-path: none; text-shadow: none; }
+}
+
+/* ── Card entrance ── */
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.82) translateY(10px); }
+  65%  { transform: scale(1.04) translateY(-3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes revealLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Decorative ── */
+@keyframes borderPulse {
+  0%, 100% { box-shadow: 5px 5px 0 #000; }
+  50%       { box-shadow: 5px 5px 0 #000, 0 0 0 4px rgba(255,214,0,0.5); }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+@keyframes shimmerBar {
+  from { background-position: -300px center; }
+  to   { background-position: 300px center; }
+}
+@keyframes spin360 {
+  to { transform: rotate(360deg); }
+}
+@keyframes countPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
 }
 
 @layer components {
@@ -275,6 +343,49 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     overflow: hidden;
+  }
+
+  /* ── Staggered card entry ── */
+  .sdv-card-enter {
+    animation: revealUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--card-i, 0) * 65ms);
+  }
+
+  /* ── Scroll-reveal sections ── */
+  .reveal-section {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Stat card accent ── */
+  .stat-card-value {
+    animation: countPop 0.4s ease both;
+  }
+
+  /* ── Shimmer loading placeholder ── */
+  .sdv-shimmer {
+    background: linear-gradient(90deg, #eee 0%, #f5f5f5 40%, #eee 100%);
+    background-size: 600px 100%;
+    animation: shimmerBar 1.4s infinite linear;
+  }
+
+  /* ── Hover tilt on interactive cards ── */
+  .sdv-tilt {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transform-origin: center bottom;
+  }
+  .sdv-tilt:hover {
+    transform: translate(-2px, -3px) rotate(-0.4deg);
+    box-shadow: 8px 8px 0 #000;
+  }
+  .sdv-tilt:active {
+    transform: translate(1px, 1px) rotate(0deg);
+    box-shadow: 3px 3px 0 #000;
   }
 }
 

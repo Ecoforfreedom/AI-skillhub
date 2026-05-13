@@ -7,6 +7,7 @@ import type { SkillListItem } from '@/types'
 interface Props {
   skill: SkillListItem
   compact?: boolean
+  index?: number
 }
 
 function tierInfo(score: number): { label: string; bg: string; color: string; stripe: string } {
@@ -16,7 +17,7 @@ function tierInfo(score: number): { label: string; bg: string; color: string; st
   return { label: 'INDEXED', bg: '#fff', color: '#000', stripe: '#ddd' }
 }
 
-export default function SkillCard({ skill, compact = false }: Props) {
+export default function SkillCard({ skill, compact = false, index = 0 }: Props) {
   const pricingInfo = PRICING_LABELS[skill.pricingType || 'unknown']
   const tier = skill.score != null && skill.score > 0 ? tierInfo(skill.score) : null
 
@@ -31,7 +32,15 @@ export default function SkillCard({ skill, compact = false }: Props) {
     .filter(Boolean)
 
   return (
-    <div className="group relative flex flex-col sdv-panel sdv-panel-hover" style={{ cursor: 'default', overflow: 'hidden', minHeight: compact ? 280 : 340 }}>
+    <div
+      className="group relative flex flex-col sdv-panel sdv-tilt sdv-card-enter"
+      style={{
+        cursor: 'default',
+        overflow: 'hidden',
+        minHeight: compact ? 280 : 340,
+        '--card-i': index,
+      } as React.CSSProperties}
+    >
       {/* Color-coded top stripe + tier badge */}
       <div style={{ height: 6, background: tier ? tier.stripe : '#eee' }} />
 
@@ -49,6 +58,8 @@ export default function SkillCard({ skill, compact = false }: Props) {
             borderRadius: 3,
             boxShadow: '2px 2px 0 #000',
             zIndex: 2,
+            animation: 'popIn 0.5s cubic-bezier(0.22,1,0.36,1) both',
+            animationDelay: `${150 + index * 65}ms`,
           }}
         >
           {tier.label}
