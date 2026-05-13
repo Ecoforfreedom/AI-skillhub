@@ -32,41 +32,41 @@ const FOOTER_SECTIONS = [
 
 export default function Footer() {
   return (
-    <footer
-      style={{
-        marginTop: 64,
-        borderTop: '4px solid var(--sdv-border)',
-        boxShadow: '0 -3px 0 var(--sdv-sh)',
-        background: 'linear-gradient(0deg, var(--sdv-wood2) 0%, var(--sdv-wood) 100%)',
-        position: 'relative',
-        zIndex: 1,
-      }}
-    >
-      <div className="container py-10">
+    <footer style={{ marginTop: 88, position: 'relative', zIndex: 1 }}>
+      <div className="container">
+        <div className="sdv-panel p-8 md:p-10" style={{ overflow: 'hidden' }}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <span className="sdv-slot flex items-center justify-center text-lg" style={{ width: 34, height: 34 }}>
-                🌾
+              <span className="sdv-slot flex items-center justify-center" style={{ width: 38, height: 38 }}>
+                <span
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: '999px',
+                    background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-blue))',
+                    boxShadow: '0 0 18px rgba(124, 230, 255, 0.4)',
+                  }}
+                />
               </span>
-              <span className="font-pixel" style={{ fontSize: '9px', color: 'var(--sdv-gold)', textShadow: '1px 1px 0 var(--sdv-sh)' }}>
-                SKILL <span style={{ color: 'var(--sdv-teal)' }}>RADAR</span>
+              <span className="font-pixel" style={{ fontSize: '20px', color: 'var(--sdv-cream)' }}>
+                AI Skill Radar
               </span>
             </Link>
-            <p className="font-dot" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.7 }}>
-              发现每个岗位能用的 AI 工具和自动化技能，让你的工作流像经营农场一样稳步升级。
+            <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)', lineHeight: 1.8, maxWidth: 320 }}>
+              为团队提供结构化的 AI 工具发现、岗位导航和知识网络，让新工具从噪音变成可执行的工作流资产。
             </p>
           </div>
 
           {FOOTER_SECTIONS.map(section => (
             <div key={section.title}>
-              <p className="font-pixel mb-3" style={{ fontSize: '7px', color: 'var(--sdv-warm)' }}>
-                ▸ {section.title}
+              <p className="font-pixel mb-3" style={{ fontSize: '14px', color: 'var(--sdv-silver)' }}>
+                {section.title}
               </p>
               <ul className="space-y-2">
                 {section.links.map(link => (
                   <li key={link.href}>
-                    <Link href={link.href} className="font-dot" style={{ fontSize: '17px', color: 'var(--sdv-dim)' }}>
+                    <Link href={link.href} className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)', transition: 'color 220ms ease' }}>
                       {link.label}
                     </Link>
                   </li>
@@ -76,13 +76,14 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '3px solid var(--sdv-sh)' }}>
-          <p className="font-pixel" style={{ fontSize: '6px', color: 'var(--sdv-dim)' }}>
-            © 2026 SKILL RADAR ✦ LEVEL UP YOUR WORKFLOW
+        <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(151, 184, 255, 0.1)' }}>
+          <p className="font-dot" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
+            © 2026 AI Skill Radar. Designed for high-signal AI tooling discovery.
           </p>
-          <Link href="/admin" className="font-pixel" style={{ fontSize: '6px', color: 'var(--sdv-warm)' }}>
-            ⚙ ADMIN
+          <Link href="/admin" className="sdv-btn" style={{ minHeight: 42, fontSize: '14px' }}>
+            Admin Console
           </Link>
+        </div>
         </div>
       </div>
     </footer>

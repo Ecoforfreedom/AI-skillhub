@@ -57,29 +57,29 @@ function SdvSection({ icon, title, sub, linkHref, linkLabel, children }: {
   children: React.ReactNode
 }) {
   return (
-    <section>
-      <div className="flex items-end justify-between mb-6">
-        <div className="flex items-center gap-3">
+    <section className="page-enter" style={{ animationDelay: '120ms' }}>
+      <div className="flex items-end justify-between mb-7 gap-4 flex-wrap">
+        <div className="flex items-center gap-4">
           <div
             className="sdv-slot flex items-center justify-center text-2xl"
-            style={{ width: 44, height: 44 }}
+            style={{ width: 52, height: 52 }}
           >
             {icon}
           </div>
           <div>
             <h2
               className="font-pixel"
-              style={{ fontSize: '11px', color: 'var(--sdv-gold)', textShadow: '1px 1px 0 var(--sdv-sh), 0 0 8px rgba(240,192,48,0.3)' }}
+              style={{ fontSize: '34px', color: 'var(--sdv-cream)' }}
             >
               {title}
             </h2>
-            <p className="font-dot mt-1" style={{ fontSize: '16px', color: 'var(--sdv-dim)' }}>
+            <p className="font-dot mt-2" style={{ fontSize: '17px', color: 'var(--sdv-dim)' }}>
               {sub}
             </p>
           </div>
         </div>
-        <Link href={linkHref} className="sdv-btn" style={{ textDecoration: 'none' }}>
-          {linkLabel} ▶
+        <Link href={linkHref} className="section-link" style={{ textDecoration: 'none' }}>
+          {linkLabel} →
         </Link>
       </div>
       {children}
@@ -91,96 +91,124 @@ export default async function HomePage() {
   const { totalSkills, newThisWeek, featuredSkills, latestSkills, roleCounts, catCounts } = await getHomeData()
 
   return (
-    <div className="pb-20" style={{ position: 'relative', zIndex: 1 }}>
+    <div className="pb-24" style={{ position: 'relative', zIndex: 1 }}>
       <section
+        className="page-enter"
         style={{
-          borderBottom: '4px solid var(--sdv-border)',
-          padding: '56px 0 48px',
+          padding: '88px 0 72px',
           textAlign: 'center',
-          background: 'linear-gradient(180deg, rgba(42,22,6,0.8) 0%, transparent 100%)',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        <div className="hero-orbit" />
         <div className="container relative">
           <div
-            className="inline-block mb-6 font-pixel"
+            className="inline-flex items-center gap-2 mb-8 font-dot"
             style={{
-              fontSize: 'clamp(12px, 2.5vw, 18px)',
-              color: 'var(--sdv-gold)',
-              textShadow: '2px 2px 0 var(--sdv-sh), 0 0 12px rgba(240,192,48,0.4)',
-              background: 'var(--sdv-wood2)',
-              border: '4px solid var(--sdv-border)',
-              padding: '12px 24px',
-              boxShadow: '4px 4px 0 var(--sdv-sh), inset 2px 2px 0 var(--sdv-hi), inset -2px -2px 0 var(--sdv-sh)',
-              lineHeight: 1.8,
+              fontSize: '14px',
+              color: 'var(--sdv-silver)',
+              background: 'rgba(8, 18, 34, 0.72)',
+              border: '1px solid rgba(151, 184, 255, 0.16)',
+              padding: '10px 16px',
+              borderRadius: 999,
+              boxShadow: '0 14px 34px rgba(2, 6, 23, 0.2)',
+              lineHeight: 1,
             }}
           >
-            ✦ AI SKILL RADAR ✦
+            <span
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '999px',
+                background: 'var(--sdv-teal)',
+                boxShadow: '0 0 14px rgba(124, 230, 255, 0.46)',
+              }}
+            />
+            AI tooling intelligence for modern teams
           </div>
 
-          <h1 className="font-pixel mb-4" style={{ fontSize: 'clamp(10px, 2vw, 14px)', color: 'var(--sdv-cream)', lineHeight: 2 }}>
-            发现每个岗位
+          <h1 className="font-pixel mb-6 mx-auto" style={{ fontSize: 'clamp(56px, 7vw, 76px)', maxWidth: 980, color: 'var(--sdv-cream)', lineHeight: 1.02 }}>
+            把分散的 AI 工具
             <br />
-            <span style={{ color: 'var(--sdv-teal)', textShadow: '0 0 10px rgba(80,200,160,0.6)' }}>
-              能直接用的 AI 工具
+            <span className="text-glow-teal" style={{ color: 'var(--sdv-silver)' }}>
+              组织成可执行的工作流雷达
             </span>
           </h1>
 
-          <p className="font-dot mx-auto mb-8" style={{ fontSize: '18px', color: 'var(--sdv-warm)', maxWidth: 560, lineHeight: 1.7 }}>
-            覆盖咨询、金融、市场、产品、运营等14个岗位
-            <br />
-            搜罗 AI 工具、自动化方案和 Prompt 模板
+          <p className="font-dot mx-auto mb-10" style={{ fontSize: 'clamp(16px, 2vw, 20px)', color: 'var(--sdv-dim)', maxWidth: 760, lineHeight: 1.8 }}>
+            面向咨询、金融、市场、产品、运营与研发团队的 AI 工具目录，
+            用统一的信息层级、岗位视角和高信号筛选，帮助你更快判断什么值得接入工作流。
           </p>
 
-          <div className="flex flex-wrap justify-center gap-2 max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <Link
+              href="/skills"
+              className="sdv-btn"
+              style={{
+                minHeight: 54,
+                paddingInline: 24,
+                background: 'linear-gradient(180deg, rgba(244, 248, 255, 0.98) 0%, rgba(215, 226, 255, 0.94) 100%)',
+                color: '#08111f',
+                boxShadow: '0 24px 60px rgba(72, 118, 255, 0.22)',
+              }}
+            >
+              开始探索工具
+            </Link>
+            <Link
+              href="/rankings"
+              className="sdv-btn"
+              style={{
+                minHeight: 54,
+                paddingInline: 24,
+                background: 'rgba(9, 18, 34, 0.32)',
+                color: 'var(--sdv-silver)',
+              }}
+            >
+              查看高分榜单
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10 max-w-5xl mx-auto">
+            {[
+              { label: '已收录工具', value: formatNumber(totalSkills), hint: '持续每日更新' },
+              { label: '本周新增', value: `+${newThisWeek}`, hint: '来自 GitHub 与工具目录' },
+              { label: '覆盖岗位', value: '14', hint: '按团队角色组织' },
+              { label: '功能维度', value: '20', hint: '支持快速筛选' },
+            ].map(item => (
+              <div key={item.label} className="sdv-panel px-5 py-5 text-left">
+                <p className="font-dot" style={{ fontSize: '13px', color: 'var(--sdv-dim)' }}>{item.label}</p>
+                <p className="font-pixel mt-3" style={{ fontSize: '32px', color: 'var(--sdv-cream)' }}>{item.value}</p>
+                <p className="font-dot mt-2" style={{ fontSize: '13px', color: 'var(--sdv-dim)' }}>{item.hint}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
             {ROLES.slice(0, 8).map(role => (
               <Link
                 key={role.id}
                 href={`/skills?role=${role.id}`}
-                className="flex items-center gap-1.5 font-dot text-sm sdv-panel sdv-panel-hover"
+                className="flex items-center gap-2 font-dot text-sm sdv-chip"
                 style={{
-                  padding: '6px 12px',
+                  padding: '12px 16px',
                   color: 'var(--sdv-warm)',
                   textDecoration: 'none',
-                  transition: 'all 0.1s',
+                  transition: 'all 220ms ease',
                 }}
               >
                 <span>{role.icon}</span>
                 <span>{role.name}</span>
               </Link>
             ))}
-            <Link href="/roles" className="sdv-btn font-dot text-sm" style={{ textDecoration: 'none' }}>
-              更多岗位 ▶
+            <Link href="/roles" className="sdv-chip font-dot text-sm" style={{ textDecoration: 'none', padding: '12px 16px' }}>
+              查看全部岗位 →
             </Link>
           </div>
         </div>
       </section>
 
-      <section style={{ borderBottom: '4px solid var(--sdv-border)' }}>
-        <div className="container py-4">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              { icon: '📦', value: formatNumber(totalSkills), label: '收录工具', color: 'var(--sdv-teal)' },
-              { icon: '🌱', value: `+${newThisWeek}`, label: '本周新增', color: 'var(--sdv-green)' },
-              { icon: '👤', value: '14', label: '覆盖岗位', color: 'var(--sdv-gold)' },
-              { icon: '🗂️', value: '20', label: '功能分类', color: 'var(--sdv-blue)' },
-            ].map((stat, index) => (
-              <div key={index} className="sdv-slot flex items-center gap-3 px-4 py-3">
-                <span style={{ fontSize: '22px' }}>{stat.icon}</span>
-                <div>
-                  <p className="font-pixel" style={{ fontSize: '14px', color: stat.color, textShadow: `0 0 6px ${stat.color}` }}>
-                    {stat.value}
-                  </p>
-                  <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)' }}>
-                    {stat.label}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="container mt-12 space-y-16">
+      <div className="container mt-20 space-y-20">
         <SdvSection icon="⭐" title="精选高分工具" sub="综合评分最高、实用性最强" linkHref="/rankings" linkLabel="查看榜单">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {featuredSkills.map(skill => (
@@ -188,11 +216,11 @@ export default async function HomePage() {
             ))}
           </div>
           {featuredSkills.length === 0 && (
-            <div className="sdv-slot py-16 text-center" style={{ border: '4px dashed var(--sdv-border)' }}>
-              <p className="font-pixel mb-3" style={{ fontSize: '10px', color: 'var(--sdv-gold)' }}>
+            <div className="sdv-panel py-16 text-center">
+              <p className="font-pixel mb-3" style={{ fontSize: '22px', color: 'var(--sdv-cream)' }}>
                 暂无数据
               </p>
-              <p className="font-dot" style={{ color: 'var(--sdv-dim)' }}>
+              <p className="font-dot" style={{ color: 'var(--sdv-dim)', fontSize: '16px' }}>
                 等待服务器启动时自动导入初始数据...
               </p>
             </div>
@@ -205,11 +233,11 @@ export default async function HomePage() {
               <Link
                 key={role.id}
                 href={`/skills?role=${role.id}`}
-                className="flex flex-col items-center gap-2 p-3 text-center sdv-panel sdv-panel-hover"
+                className="flex flex-col items-center gap-3 p-5 text-center sdv-panel sdv-panel-hover"
                 style={{ textDecoration: 'none' }}
               >
-                <span style={{ fontSize: '26px' }}>{role.icon}</span>
-                <span className="font-pixel leading-snug" style={{ fontSize: '6.5px', color: 'var(--sdv-cream)' }}>
+                <span style={{ fontSize: '28px' }}>{role.icon}</span>
+                <span className="font-pixel leading-snug" style={{ fontSize: '16px', color: 'var(--sdv-cream)' }}>
                   {role.name}
                 </span>
                 <span className="font-dot" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
@@ -226,12 +254,12 @@ export default async function HomePage() {
               <Link
                 key={category.id}
                 href={`/skills?category=${category.id}`}
-                className="flex items-center gap-2.5 px-3 py-2.5 sdv-panel sdv-panel-hover"
+                className="flex items-center gap-3 px-4 py-4 sdv-panel sdv-panel-hover"
                 style={{ textDecoration: 'none' }}
               >
-                <span style={{ fontSize: '18px' }}>{category.icon}</span>
+                <span style={{ fontSize: '20px' }}>{category.icon}</span>
                 <div className="min-w-0">
-                  <p className="font-pixel truncate" style={{ fontSize: '6.5px', color: 'var(--sdv-cream)' }}>
+                  <p className="font-pixel truncate" style={{ fontSize: '15px', color: 'var(--sdv-cream)' }}>
                     {category.name}
                   </p>
                   <p className="font-dot" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
