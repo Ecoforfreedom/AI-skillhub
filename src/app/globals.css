@@ -67,7 +67,7 @@
     min-height: 100vh;
     background: var(--nb-yellow);
     color: var(--nb-black);
-    font-family: 'IBM Plex Mono', 'Courier New', 'Microsoft YaHei', monospace;
+    font-family: 'IBM Plex Mono', 'Microsoft YaHei', '微软雅黑', 'Courier New', monospace;
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -79,7 +79,7 @@
   h3,
   h4,
   .font-pixel {
-    font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif;
+    font-family: 'Bebas Neue', Impact, 'Microsoft YaHei', '微软雅黑', 'Arial Black', sans-serif;
     line-height: 1.0;
     letter-spacing: 0.03em;
     font-weight: 400;

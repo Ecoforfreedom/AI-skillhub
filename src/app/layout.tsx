@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import SplashGate from '@/components/SplashGate'
 
 export const metadata: Metadata = {
   title: 'AI Skill Radar ★ 发现每个岗位能用的 AI 工具',
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" className="dark">
-      <body className="min-h-screen" style={{ backgroundColor: 'var(--sdv-night)', position: 'relative', zIndex: 1 }}>
+      <body className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
+        <SplashGate />
         <Header />
         <main className="min-h-[calc(100vh-4rem)]" style={{ position: 'relative', zIndex: 1 }}>
           {children}
