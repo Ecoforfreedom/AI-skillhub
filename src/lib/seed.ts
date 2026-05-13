@@ -348,8 +348,10 @@ const SEED_SKILLS = [
   },
 ]
 
-async function main() {
-  console.log('🌱 Seeding database...')
+async function seedSkills(logProgress: boolean) {
+  if (logProgress) {
+    console.log('🌱 Seeding database...')
+  }
 
   for (const skill of SEED_SKILLS) {
     const { roleCategories, functionCategories, tags, useCases, targetUsers, inputType, outputType, workflowSteps, similarTools, topics, ...rest } = skill as any
@@ -375,22 +377,46 @@ async function main() {
         topics: topics || [],
       },
     })
-    console.log(`  ✓ ${skill.name}`)
+    if (logProgress) {
+      console.log(`  ✓ ${skill.name}`)
+    }
   }
 
-  console.log(`\n✅ Seeded ${SEED_SKILLS.length} skills`)
+  if (logProgress) {
+    console.log(`\n✅ Seeded ${SEED_SKILLS.length} skills`)
+  }
+}
+
+async function main() {
+  await seedSkills(true)
   await prisma.$disconnect()
+}
+
+export async function ensureSeeded(logPrefix?: string) {
+  const count = await prisma.skill.count()
+  if (count > 0) {
+    return false
+  }
+
+  if (logPrefix) {
+    console.log(`🌱 ${logPrefix} Empty database detected, seeding initial skills...`)
+  }
+
+  await seedSkills(false)
+
+  if (logPrefix) {
+    console.log(`🌿 ${logPrefix} Done!`)
+  }
+
+  return true
 }
 
 /** Auto-seed: called from instrumentation.ts on server startup */
 export async function autoSeed() {
   try {
-    const count = await prisma.skill.count()
-    if (count === 0) {
-      console.log('🌱 [AutoSeed] Empty database detected, seeding initial skills...')
-      await main()
-      console.log('🌿 [AutoSeed] Done!')
-    } else {
+    const seeded = await ensureSeeded('[AutoSeed]')
+    if (!seeded) {
+      const count = await prisma.skill.count()
       console.log(`🌿 [AutoSeed] ${count} skills already in DB, skipping`)
     }
   } catch (e) {

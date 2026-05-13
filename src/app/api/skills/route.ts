@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/db'
-import { ROLES, CATEGORIES } from '@/lib/constants'
+import { ensureSeeded } from '@/lib/seed'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(req: NextRequest) {
   try {
+    await ensureSeeded('[GET /api/skills]')
+
     const { searchParams } = new URL(req.url)
 
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'))

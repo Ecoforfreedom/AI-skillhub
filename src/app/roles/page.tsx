@@ -1,20 +1,21 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 import prisma from '@/lib/db'
 import { ROLES } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+import { ensureSeeded } from '@/lib/seed'
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 300
 
 async function getRoleStats() {
+  await ensureSeeded('[RolesPage]')
+
   const allSkills = await prisma.skill.findMany({
     where: { isActive: true, isHidden: false },
-    select: { roleCategories: true, name: true, slug: true, oneLiner: true, score: true },
+    select: { roleCategories: true, name: true, slug: true, score: true },
   })
 
   const counts: Record<string, number> = {}
-  const topTools: Record<string, any[]> = {}
+  const topTools: Record<string, { name: string; slug: string; score: number | null }[]> = {}
 
   for (const skill of allSkills) {
     for (const role of skill.roleCategories) {
@@ -23,11 +24,10 @@ async function getRoleStats() {
   }
 
   for (const role of ROLES) {
-    const roleSkills = allSkills
-      .filter(s => s.roleCategories.includes(role.id))
-      .sort((a, b) => (b.score || 0) - (a.score || 0))
+    topTools[role.id] = allSkills
+      .filter(skill => skill.roleCategories.includes(role.id))
+      .sort((left, right) => (right.score || 0) - (left.score || 0))
       .slice(0, 3)
-    topTools[role.id] = roleSkills
   }
 
   return { counts, topTools }
@@ -38,9 +38,16 @@ export default async function RolesPage() {
 
   return (
     <div className="container py-10">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white mb-2">按岗位找工具</h1>
-        <p className="text-gray-400">选择你的岗位，发现最适合你工作场景的 AI 工具和自动化方案</p>
+      <div className="sdv-panel px-6 py-6 mb-8">
+        <p className="font-pixel text-glow-gold" style={{ fontSize: '8px', color: 'var(--sdv-gold)' }}>
+          岗位图鉴
+        </p>
+        <h1 className="font-pixel mt-3" style={{ fontSize: '14px', color: 'var(--sdv-cream)' }}>
+          按岗位找工具
+        </h1>
+        <p className="font-dot mt-2" style={{ fontSize: '17px', color: 'var(--sdv-dim)' }}>
+          选择你的职业路线，看看这片农场里最适合你的 AI 装备。
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -49,48 +56,53 @@ export default async function RolesPage() {
           const tools = topTools[role.id] || []
 
           return (
-            <div
-              key={role.id}
-              className="group rounded-xl border border-gray-800 bg-gray-900 p-6 hover:border-violet-500/30 hover:bg-gray-900/80 transition-all"
-            >
+            <div key={role.id} className="sdv-panel sdv-panel-hover p-5 transition-all duration-150">
               <div className="flex items-start gap-3 mb-4">
-                <span className="text-3xl">{role.icon}</span>
-                <div>
-                  <h2 className="font-semibold text-white">{role.name}</h2>
-                  <p className="text-xs text-gray-500">{role.nameEn}</p>
+                <span style={{ fontSize: '28px' }}>{role.icon}</span>
+                <div className="min-w-0 flex-1">
+                  <h2 className="font-pixel" style={{ fontSize: '8px', color: 'var(--sdv-cream)' }}>
+                    {role.name}
+                  </h2>
+                  <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)' }}>
+                    {role.nameEn}
+                  </p>
                 </div>
-                <span className="ml-auto text-sm font-bold text-gray-500">{count}</span>
+                <span className="font-pixel" style={{ fontSize: '8px', color: 'var(--sdv-gold)' }}>
+                  {count}
+                </span>
               </div>
 
-              <p className="text-xs text-gray-500 mb-4 leading-relaxed">{role.description}</p>
+              <p className="font-dot mb-4" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.7 }}>
+                {role.description}
+              </p>
 
-              {tools.length > 0 && (
-                <div className="mb-4 space-y-2">
-                  {tools.map(t => (
+              <div className="space-y-2 mb-4 min-h-[92px]">
+                {tools.length > 0 ? (
+                  tools.map(tool => (
                     <Link
-                      key={t.slug}
-                      href={`/skills/${t.slug}`}
-                      className="flex items-center gap-2 text-xs text-gray-400 hover:text-white transition-colors group/tool"
+                      key={tool.slug}
+                      href={`/skills/${tool.slug}`}
+                      className="flex items-center gap-2 font-dot"
+                      style={{ fontSize: '15px', color: 'var(--sdv-warm)' }}
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-600 group-hover/tool:bg-violet-400 transition-colors shrink-0" />
-                      <span className="truncate">{t.name}</span>
-                      {t.score && (
-                        <span className="ml-auto shrink-0 text-violet-500">{t.score}</span>
-                      )}
+                      <span style={{ color: 'var(--sdv-teal)' }}>◆</span>
+                      <span className="truncate">{tool.name}</span>
+                      {tool.score ? (
+                        <span className="ml-auto shrink-0" style={{ color: 'var(--sdv-gold)' }}>
+                          {tool.score}
+                        </span>
+                      ) : null}
                     </Link>
-                  ))}
-                </div>
-              )}
-
-              <Link
-                href={`/skills?role=${role.id}`}
-                className={cn(
-                  'flex items-center gap-1 text-xs font-medium transition-colors',
-                  count > 0 ? 'text-violet-400 hover:text-violet-300' : 'text-gray-600 cursor-default'
+                  ))
+                ) : (
+                  <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)' }}>
+                    暂无推荐工具
+                  </p>
                 )}
-              >
-                {count > 0 ? `查看全部 ${count} 个工具` : '暂无数据'}
-                {count > 0 && <ArrowRight className="h-3 w-3" />}
+              </div>
+
+              <Link href={`/skills?role=${role.id}`} className="sdv-btn w-full">
+                {count > 0 ? `查看全部 ${count} 个工具` : '进入岗位页'}
               </Link>
             </div>
           )
