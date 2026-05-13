@@ -32,63 +32,63 @@ const FOOTER_SECTIONS = [
 
 export default function Footer() {
   return (
-    <footer style={{ marginTop: 88, position: 'relative', zIndex: 1 }}>
-      <div className="container">
-        <div className="sdv-panel p-8 md:p-10" style={{ overflow: 'hidden' }}>
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 pb-8" style={{ borderBottom: '1px solid rgba(151, 184, 255, 0.1)' }}>
+    <footer style={{ marginTop: 64, position: 'relative', zIndex: 1, borderTop: '3px solid #000', background: '#000' }}>
+      <div className="container" style={{ padding: '48px 0' }}>
+        {/* Top CTA row */}
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-10 pb-10" style={{ borderBottom: '3px solid #333' }}>
           <div className="max-w-2xl">
-            <div className="sdv-chip inline-flex items-center font-dot" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sdv-silver)' }}>
-              Safe Zone
+            <div
+              className="sdv-chip inline-flex items-center font-dot"
+              style={{ background: '#FFD600', color: '#000', border: '2px solid #FFD600', marginBottom: 16 }}
+            >
+              SAFE ZONE
             </div>
-            <h2 className="font-pixel mt-5" style={{ fontSize: 'clamp(28px, 3vw, 40px)', color: 'var(--sdv-cream)' }}>
-              用更轻的游戏风格整理 AI 工具
+            <h2 className="font-pixel" style={{ fontSize: 'clamp(32px, 4vw, 56px)', color: '#FFD600' }}>
+              AI TOOLS, ZERO FLUFF
             </h2>
-            <p className="font-dot mt-3" style={{ fontSize: '16px', color: 'var(--sdv-dim)', lineHeight: 1.8 }}>
-              保留清晰分类和筛选逻辑，但把浏览体验做得更像一块简洁的任务面板。
+            <p className="font-dot mt-3" style={{ fontSize: '14px', color: '#aaa', lineHeight: 1.8, letterSpacing: '0.02em' }}>
+              按岗位和功能整理 AI 工具，保持清晰分类和筛选逻辑。
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/skills" className="sdv-btn" style={{ minHeight: 46 }}>
-              打开工具栏
+              打开工具栏 →
             </Link>
-            <Link href="/rankings" className="sdv-btn" style={{ minHeight: 46, background: 'rgba(255, 248, 219, 0.92)', color: 'var(--sdv-silver)', boxShadow: 'none' }}>
+            <Link
+              href="/rankings"
+              className="sdv-btn"
+              style={{ minHeight: 46, background: '#FFD600', color: '#000', border: '3px solid #FFD600', boxShadow: '4px 4px 0 #555' }}
+            >
               查看排行
             </Link>
           </div>
         </div>
 
+        {/* Link columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2 mb-4">
-              <span className="sdv-slot flex items-center justify-center" style={{ width: 38, height: 38 }}>
-                <span
-                  style={{
-                    width: 14,
-                    height: 14,
-                    borderRadius: '999px',
-                    background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-gold))',
-                    boxShadow: '0 0 14px rgba(212, 151, 18, 0.28)',
-                  }}
-                />
+              <span className="sdv-slot flex items-center justify-center font-pixel" style={{ width: 36, height: 36, fontSize: '18px', background: '#FFD600', border: '3px solid #FFD600' }}>
+                💀
               </span>
-              <span className="font-pixel" style={{ fontSize: '20px', color: 'var(--sdv-cream)' }}>
-                AI Skill Radar
+              <span className="font-pixel" style={{ fontSize: '22px', color: '#FFD600', letterSpacing: '0.04em' }}>
+                AI SKILL RADAR
               </span>
             </Link>
-            <p className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)', lineHeight: 1.8, maxWidth: 320 }}>
-              把工具发现、角色筛选和排行榜放进一套更轻量、更好浏览的黄色面板里。
+            <p className="font-dot" style={{ fontSize: '13px', color: '#888', lineHeight: 1.8, maxWidth: 320, letterSpacing: '0.02em' }}>
+              把工具发现、角色筛选和排行榜放进一套简单直接的面板里。
             </p>
           </div>
 
           {FOOTER_SECTIONS.map(section => (
             <div key={section.title}>
-              <p className="font-pixel mb-3" style={{ fontSize: '14px', color: 'var(--sdv-silver)' }}>
-                {section.title}
+              <p className="font-pixel mb-3" style={{ fontSize: '18px', color: '#FFD600', letterSpacing: '0.04em' }}>
+                {section.title.toUpperCase()}
               </p>
               <ul className="space-y-2">
                 {section.links.map(link => (
                   <li key={link.href}>
-                    <Link href={link.href} className="font-dot" style={{ fontSize: '15px', color: 'var(--sdv-dim)', transition: 'color 220ms ease' }}>
+                    <Link href={link.href} className="font-dot" style={{ fontSize: '13px', color: '#888', letterSpacing: '0.02em', transition: 'color 100ms ease' }}>
                       {link.label}
                     </Link>
                   </li>
@@ -98,14 +98,14 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '1px solid rgba(151, 184, 255, 0.1)' }}>
-          <p className="font-dot" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
-            © 2026 AI Skill Radar. Yellow game-style UI edition.
+        {/* Bottom bar */}
+        <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '2px solid #333' }}>
+          <p className="font-dot" style={{ fontSize: '12px', color: '#666', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+            © 2026 AI SKILL RADAR — NEO-BRUTALIST EDITION
           </p>
-          <Link href="/admin" className="sdv-btn" style={{ minHeight: 42, fontSize: '14px' }}>
-            Admin Console
+          <Link href="/admin" className="sdv-btn" style={{ minHeight: 38, fontSize: '12px', paddingInline: 14 }}>
+            ADMIN
           </Link>
-        </div>
         </div>
       </div>
     </footer>

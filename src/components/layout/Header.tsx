@@ -61,45 +61,33 @@ export default function Header() {
   const isHome = pathname === '/'
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 50, paddingTop: 18 }}>
+    <header style={{ position: 'sticky', top: 0, zIndex: 50, background: '#FFD600', borderBottom: '3px solid #000' }}>
       <div className="container" style={{ position: 'relative', zIndex: 2 }}>
         <div
           className="page-enter"
           style={{
-            minHeight: 74,
+            minHeight: 68,
             display: 'flex',
             alignItems: 'center',
             gap: 14,
-            padding: '12px 14px',
-            borderRadius: 999,
-            background: 'rgba(255, 249, 223, 0.94)',
-            border: '1px solid rgba(135, 98, 20, 0.16)',
-            boxShadow: '0 14px 30px rgba(126, 90, 16, 0.12)',
+            padding: '10px 4px',
           }}
         >
-          <Link href="/" className="flex items-center gap-3 shrink-0 min-w-0" style={{ paddingInline: 6 }}>
-            <span className="sdv-slot flex items-center justify-center" style={{ width: 42, height: 42, position: 'relative' }}>
-              <span
-                style={{
-                  width: 16,
-                  height: 16,
-                  borderRadius: '999px',
-                  background: 'linear-gradient(135deg, var(--sdv-teal), var(--sdv-gold))',
-                  boxShadow: '0 0 14px rgba(212, 151, 18, 0.34)',
-                }}
-              />
+          <Link href="/" className="flex items-center gap-2 shrink-0 min-w-0" style={{ paddingInline: 4 }}>
+            <span
+              className="sdv-slot flex items-center justify-center font-pixel"
+              style={{ width: 40, height: 40, fontSize: '20px' }}
+            >
+              💀
             </span>
             <span className="hidden sm:flex flex-col min-w-0">
-              <span className="font-pixel truncate" style={{ fontSize: '17px', color: 'var(--sdv-cream)' }}>
-                AI Skill Radar
-              </span>
-              <span className="hidden xl:block font-dot truncate" style={{ fontSize: '12px', color: 'var(--sdv-dim)' }}>
-                yellow quest board for AI tools
+              <span className="font-pixel" style={{ fontSize: '26px', color: '#000', letterSpacing: '0.04em' }}>
+                AI SKILL RADAR
               </span>
             </span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1.5 mx-auto min-w-0">
+          <nav className="hidden md:flex items-center gap-2 mx-auto min-w-0">
             {NAV_LINKS.map(link => {
               const active = link.href === '/skills'
                 ? pathname.startsWith('/skills')
@@ -111,40 +99,29 @@ export default function Header() {
                   href={link.href}
                   className="font-dot"
                   style={{
-                    position: 'relative',
-                    padding: '10px 14px',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    letterSpacing: '-0.02em',
+                    padding: '8px 14px',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    letterSpacing: '0.06em',
+                    textTransform: 'uppercase',
                     whiteSpace: 'nowrap',
-                    color: active ? 'var(--sdv-cream)' : 'var(--sdv-dim)',
-                    background: active ? 'rgba(255, 232, 145, 0.86)' : 'transparent',
-                    border: active ? '1px solid rgba(149, 103, 18, 0.18)' : '1px solid transparent',
-                    borderRadius: 999,
-                    transition: 'color 220ms ease, transform 220ms ease, border-color 220ms ease, background 220ms ease',
+                    color: active ? '#FFD600' : '#000',
+                    background: active ? '#000' : 'transparent',
+                    border: '3px solid #000',
+                    borderRadius: 4,
+                    boxShadow: active ? '3px 3px 0 rgba(0,0,0,0.25)' : 'none',
+                    transition: 'transform 100ms ease, box-shadow 100ms ease',
                   }}
                 >
-                  <span>{link.label}</span>
-                  <span
-                    style={{
-                      position: 'absolute',
-                      left: 18,
-                      right: 18,
-                      bottom: 4,
-                      height: 2,
-                      borderRadius: 999,
-                      background: active ? 'linear-gradient(90deg, var(--sdv-teal), var(--sdv-gold))' : 'transparent',
-                      boxShadow: active ? '0 0 12px rgba(212, 151, 18, 0.22)' : 'none',
-                    }}
-                  />
+                  {link.label}
                 </Link>
               )
             })}
           </nav>
 
-          <div className="hidden xl:block w-[300px] shrink-0 relative" ref={searchRef}>
+          <div className="hidden xl:block w-[280px] shrink-0 relative" ref={searchRef}>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--sdv-dim)' }} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#000' }} />
               <input
                 type="text"
                 placeholder="搜索工具、岗位、场景"
@@ -165,7 +142,7 @@ export default function Header() {
                     setShowResults(false)
                   }}
                   className="absolute right-3 top-1/2 -translate-y-1/2"
-                  style={{ color: 'var(--sdv-dim)' }}
+                  style={{ color: '#000' }}
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -174,11 +151,8 @@ export default function Header() {
 
             {showResults && results.length > 0 && (
               <div
-                className="absolute top-full mt-3 w-full overflow-hidden sdv-panel"
-                style={{
-                  borderRadius: 24,
-                  borderColor: 'rgba(124, 230, 255, 0.24)',
-                }}
+                className="absolute top-full mt-2 w-full overflow-hidden sdv-panel"
+                style={{ zIndex: 100 }}
               >
                 {results.map(result => (
                   <Link
@@ -200,8 +174,8 @@ export default function Header() {
                       </p>
                     </div>
                     {result.score ? (
-                      <span className="font-dot shrink-0" style={{ fontSize: '13px', color: 'var(--sdv-teal)' }}>
-                        {scoreToStars(result.score)}
+                      <span className="font-dot shrink-0" style={{ fontSize: '12px', fontWeight: 700, color: '#FF6B00' }}>
+                        Lv.{result.score}
                       </span>
                     ) : null}
                   </Link>
@@ -210,9 +184,9 @@ export default function Header() {
                   href={`/skills?search=${encodeURIComponent(query)}`}
                   onClick={() => setShowResults(false)}
                   className="block px-4 py-3 font-dot text-center"
-                  style={{ fontSize: '14px', color: 'var(--sdv-teal)' }}
+                  style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', background: '#FFD600', borderTop: '2px solid #000' }}
                 >
-                  打开完整列表
+                  查看全部结果 →
                 </Link>
               </div>
             )}
@@ -222,13 +196,7 @@ export default function Header() {
             <Link
               href={isHome ? '/skills' : '/rankings'}
               className="sdv-btn"
-              style={{
-                minHeight: 46,
-                paddingInline: 18,
-                background: isHome ? 'linear-gradient(180deg, rgba(255, 214, 94, 0.98) 0%, rgba(237, 181, 44, 0.98) 100%)' : 'rgba(255, 248, 219, 0.92)',
-                color: 'var(--sdv-cream)',
-                boxShadow: isHome ? '0 12px 24px rgba(154, 112, 24, 0.18)' : 'none',
-              }}
+              style={{ minHeight: 42, paddingInline: 18 }}
             >
               {isHome ? '开始探索' : '查看榜单'}
               <ArrowUpRight className="h-4 w-4" />
@@ -239,21 +207,21 @@ export default function Header() {
             <button
               type="button"
               className="sdv-btn"
-              style={{ minHeight: 42, width: 42, padding: 0 }}
+              style={{ minHeight: 40, width: 40, padding: 0 }}
               onClick={() => setShowResults(!showResults)}
             >
               <Search className="h-4 w-4" />
             </button>
-            <button type="button" className="sdv-btn" style={{ minHeight: 42, width: 42, padding: 0 }} onClick={() => setOpen(!open)}>
+            <button type="button" className="sdv-btn" style={{ minHeight: 40, width: 40, padding: 0 }} onClick={() => setOpen(!open)}>
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
         {showResults && (
-          <div className="lg:hidden mt-3 sdv-panel p-4" ref={searchRef}>
+          <div className="lg:hidden mt-2 sdv-panel p-4" ref={searchRef}>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--sdv-dim)' }} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#000' }} />
               <input
                 type="text"
                 placeholder="搜索工具、岗位、场景..."
@@ -270,7 +238,7 @@ export default function Header() {
                     setResults([])
                   }}
                   className="absolute right-3 top-1/2 -translate-y-1/2"
-                  style={{ color: 'var(--sdv-dim)' }}
+                  style={{ color: '#000' }}
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -278,7 +246,7 @@ export default function Header() {
             </div>
 
             {results.length > 0 && (
-              <div className="mt-3 overflow-hidden" style={{ borderRadius: 20, border: '1px solid rgba(151, 184, 255, 0.12)' }}>
+              <div className="mt-3 overflow-hidden" style={{ border: '3px solid #000', borderRadius: 4, boxShadow: '4px 4px 0 #000' }}>
                 {results.map(result => (
                   <Link
                     key={result.id}
@@ -288,13 +256,13 @@ export default function Header() {
                       setQuery('')
                     }}
                     className="flex items-center gap-3 px-4 py-3"
-                    style={{ borderBottom: '1px solid rgba(151, 184, 255, 0.08)' }}
+                    style={{ borderBottom: '2px solid #000' }}
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="font-pixel truncate" style={{ fontSize: '14px', color: 'var(--sdv-cream)' }}>
+                      <p className="font-pixel truncate" style={{ fontSize: '16px', color: '#000' }}>
                         {result.name}
                       </p>
-                      <p className="font-dot truncate" style={{ fontSize: '14px', color: 'var(--sdv-dim)' }}>
+                      <p className="font-dot truncate" style={{ fontSize: '12px', color: '#555' }}>
                         {result.oneLiner}
                       </p>
                     </div>
@@ -306,7 +274,7 @@ export default function Header() {
         )}
 
         {open && (
-          <div className="md:hidden mt-3 sdv-panel p-3 flex flex-col gap-2">
+          <div className="md:hidden mt-0 sdv-panel p-3 flex flex-col gap-2" style={{ borderTop: 'none', borderRadius: '0 0 4px 4px', boxShadow: '5px 5px 0 #000' }}>
             {NAV_LINKS.map(link => {
               const active = pathname.startsWith(link.href)
               return (
@@ -316,11 +284,14 @@ export default function Header() {
                   onClick={() => setOpen(false)}
                   className="font-dot px-4 py-3"
                   style={{
-                    fontSize: '15px',
-                    fontWeight: 600,
-                    color: active ? 'var(--sdv-cream)' : 'var(--sdv-dim)',
-                    borderRadius: 18,
-                    background: active ? 'rgba(255, 232, 145, 0.86)' : 'transparent',
+                    fontSize: '13px',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.06em',
+                    color: active ? '#FFD600' : '#000',
+                    background: active ? '#000' : 'transparent',
+                    border: '2px solid #000',
+                    borderRadius: 4,
                   }}
                 >
                   {link.label}

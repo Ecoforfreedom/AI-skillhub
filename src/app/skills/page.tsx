@@ -73,29 +73,29 @@ export default function SkillsPage() {
       <div className="sdv-panel px-6 py-7 md:px-8 md:py-8">
         <div className="flex flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
           <div className="max-w-3xl">
-            <div className="sdv-chip inline-flex items-center font-dot" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--sdv-silver)' }}>
-              Mission Select
+            <div className="sdv-chip inline-flex items-center font-dot" style={{ padding: '7px 12px' }}>
+              TOOL SELECT
             </div>
-            <h1 className="font-pixel mt-5" style={{ fontSize: 'clamp(38px, 5vw, 60px)', color: 'var(--sdv-cream)', lineHeight: 1.02 }}>
-              像挑装备一样
+            <h1 className="font-pixel mt-4" style={{ fontSize: 'clamp(48px, 6vw, 88px)', color: '#000', lineHeight: 0.94 }}>
+              FIND YOUR
               <br />
-              选择 AI 工具
+              AI TOOL
             </h1>
-            <p className="font-dot mt-4" style={{ fontSize: '17px', color: 'var(--sdv-dim)', lineHeight: 1.85, maxWidth: 720 }}>
-              保持原有筛选能力，但把浏览方式做得更像一块游戏任务板。你可以按岗位、功能和分数快速锁定合适工具。
+            <p className="font-dot mt-4" style={{ fontSize: '14px', color: '#444', lineHeight: 1.8, maxWidth: 640, letterSpacing: '0.02em' }}>
+              按岗位、功能和评分快速筛选。支持搜索和多维排序。
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 min-w-0 xl:w-[520px]">
             {[
-              { label: '背包总数', value: total ? String(total) : '...', hint: '持续清洗更新' },
-              { label: '排序规则', value: SORT_OPTIONS.find(option => option.value === sortBy)?.label || '推荐评分', hint: '支持多维排序' },
-              { label: '当前关卡', value: String(page), hint: data ? `共 ${data.totalPages} 页` : '正在加载' },
+              { label: 'TOTAL TOOLS', value: total ? String(total) : '...', hint: '持续清洗更新' },
+              { label: 'SORT BY', value: SORT_OPTIONS.find(option => option.value === sortBy)?.label || '推荐评分', hint: '支持多维排序' },
+              { label: 'PAGE', value: String(page), hint: data ? `共 ${data.totalPages} 页` : '正在加载' },
             ].map(item => (
               <div key={item.label} className="sdv-panel px-4 py-4">
-                <p className="font-dot" style={{ fontSize: '12px', color: 'var(--sdv-dim)' }}>{item.label}</p>
-                <p className="font-pixel mt-2" style={{ fontSize: '24px', color: 'var(--sdv-cream)' }}>{item.value}</p>
-                <p className="font-dot mt-2" style={{ fontSize: '12px', color: 'var(--sdv-dim)' }}>{item.hint}</p>
+                <p className="font-dot" style={{ fontSize: '11px', fontWeight: 700, color: '#555', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{item.label}</p>
+                <p className="font-pixel mt-2" style={{ fontSize: '26px', color: '#000', lineHeight: 1 }}>{item.value}</p>
+                <p className="font-dot mt-2" style={{ fontSize: '12px', color: '#888', letterSpacing: '0.02em' }}>{item.hint}</p>
               </div>
             ))}
           </div>
@@ -103,7 +103,7 @@ export default function SkillsPage() {
 
         <div className="flex gap-3 mt-8 flex-wrap">
           <div className="relative flex-1 min-w-[240px] max-w-2xl">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: 'var(--sdv-teal)' }} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#000' }} />
             <input
               type="text"
               placeholder="搜索工具名称、岗位、功能或使用场景"
@@ -115,7 +115,7 @@ export default function SkillsPage() {
               className="sdv-input w-full pl-9 pr-10"
             />
             {searchValue ? (
-              <button type="button" onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--sdv-dim)' }}>
+              <button type="button" onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: '#000' }}>
                 <X className="h-4 w-4" />
               </button>
             ) : null}
@@ -144,10 +144,10 @@ export default function SkillsPage() {
         {showMobileFilters ? (
           <div className="fixed inset-0 z-50 lg:hidden">
             <div className="absolute inset-0 bg-black/60" onClick={() => setShowMobileFilters(false)} />
-            <div className="absolute right-0 top-0 h-full w-80 overflow-y-auto px-4 py-4" style={{ background: 'var(--sdv-night)', borderLeft: '4px solid var(--sdv-border)' }}>
+            <div className="absolute right-0 top-0 h-full w-80 overflow-y-auto px-4 py-4" style={{ background: '#FFD600', borderLeft: '4px solid #000' }}>
               <div className="flex items-center justify-between mb-4">
-                <span className="font-pixel" style={{ fontSize: '8px', color: 'var(--sdv-gold)' }}>
-                  筛选
+                <span className="font-pixel" style={{ fontSize: '20px', color: '#000', letterSpacing: '0.04em' }}>
+                  FILTERS
                 </span>
                 <button type="button" onClick={() => setShowMobileFilters(false)}>
                   <X className="h-5 w-5" />
@@ -166,11 +166,11 @@ export default function SkillsPage() {
               ))}
             </div>
           ) : !data || data.skills.length === 0 ? (
-            <div className="sdv-panel py-20 text-center px-6">
-              <p className="font-pixel" style={{ fontSize: '16px', color: 'var(--sdv-gold)' }}>
-                当前区域没有找到合适装备
+            <div className="sdv-panel py-20 text-center px-6" style={{ background: '#fff' }}>
+              <p className="font-pixel" style={{ fontSize: '36px', color: '#000', letterSpacing: '0.04em' }}>
+                NO RESULTS FOUND
               </p>
-              <p className="font-dot mt-3" style={{ fontSize: '17px', color: 'var(--sdv-dim)' }}>
+              <p className="font-dot mt-3" style={{ fontSize: '14px', color: '#555', letterSpacing: '0.02em' }}>
                 试试更换关键词，或者放宽筛选条件后再看一次结果。
               </p>
             </div>
@@ -187,7 +187,7 @@ export default function SkillsPage() {
                   <button type="button" onClick={() => setPage(page - 1)} disabled={page === 1} className="sdv-btn disabled:opacity-40">
                     <ChevronLeft className="h-4 w-4" /> 上一页
                   </button>
-                  <span className="font-dot px-3" style={{ color: 'var(--sdv-warm)' }}>
+                  <span className="font-dot px-3" style={{ color: '#000', fontWeight: 700, letterSpacing: '0.04em', fontSize: '13px' }}>
                     {page} / {data.totalPages}
                   </span>
                   <button type="button" onClick={() => setPage(page + 1)} disabled={page === data.totalPages} className="sdv-btn disabled:opacity-40">
