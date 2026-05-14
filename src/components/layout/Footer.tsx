@@ -97,8 +97,8 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ borderTop: '2px solid #333' }}>
-          <p className="font-dot" style={{ fontSize: '12px', color: '#666', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-            © 2026 AI AGENT ARSENAL — NEO-BRUTALIST EDITION
+          <p className="font-dot" style={{ fontSize: '12px', color: '#666', letterSpacing: '0.04em' }}>
+            AI AGENT ARSENAL - Designed by EcoZ
           </p>
           <Link href="/admin" className="sdv-btn" style={{ minHeight: 38, fontSize: '12px', paddingInline: 14 }}>
             ADMIN
