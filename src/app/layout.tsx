@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import SplashGate from '@/components/SplashGate'
 import CustomCursor from '@/components/ui/CustomCursor'
+import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen" style={{ position: 'relative', zIndex: 1 }}>
         <SplashGate />
         <CustomCursor />
+        <PageTransition />
         <ScrollReveal />
         <Header />
         <main className="min-h-[calc(100vh-4rem)]" style={{ position: 'relative', zIndex: 1 }}>
