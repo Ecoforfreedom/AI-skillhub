@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/lib/db'
 import { requireAdmin } from '@/lib/auth'
+import { getTrafficStats } from '@/lib/analytics'
 
 export const dynamic = 'force-dynamic'
 
@@ -17,6 +18,7 @@ export async function GET(req: NextRequest) {
       irrelevantSkills,
       recentCrawls,
       totalEnrichments,
+      traffic,
     ] = await Promise.all([
       prisma.skill.count(),
       prisma.skill.count({ where: { isActive: true } }),
@@ -27,6 +29,7 @@ export async function GET(req: NextRequest) {
         where: { createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } },
       }),
       prisma.enrichmentLog.count(),
+      getTrafficStats(),
     ])
 
     return NextResponse.json({
@@ -37,6 +40,7 @@ export async function GET(req: NextRequest) {
       irrelevantSkills,
       recentCrawls,
       totalEnrichments,
+      traffic,
     })
   } catch (err) {
     console.error('[GET /api/admin/stats]', err)

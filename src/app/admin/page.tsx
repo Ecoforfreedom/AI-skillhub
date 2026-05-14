@@ -30,9 +30,9 @@ function useAdminAuth() {
     setAuthed(false)
   }
 
-  function headers() {
+  const headers = useCallback(() => {
     return { 'x-admin-password': pwd || '', 'Content-Type': 'application/json' }
-  }
+  }, [pwd])
 
   return { authed, login, logout, headers }
 }
@@ -211,6 +211,9 @@ export default function AdminPage() {
     { key: 'enrich_logs', label: 'Enrich Logs' },
   ] as const
 
+  const traffic = stats?.traffic
+  const maxTopPathViews = Math.max(...(traffic?.topPaths || []).map((item: any) => item.views), 1)
+
   return (
     <div className="min-h-screen bg-gray-950">
       {toast && <Toast msg={toast.msg} type={toast.type} onClose={() => setToast(null)} />}
@@ -306,6 +309,64 @@ export default function AdminPage() {
                 <StatCard label="Active" value={stats.activeSkills} icon={<CheckCircle className="h-5 w-5 text-green-400" />} color="border-green-500/20" />
                 <StatCard label="Pending Enrich" value={stats.pendingEnrichment} icon={<AlertTriangle className="h-5 w-5 text-amber-400" />} color="border-amber-500/20" />
                 <StatCard label="Hidden" value={stats.hiddenSkills} icon={<EyeOff className="h-5 w-5 text-gray-400" />} color="border-gray-700" />
+              </div>
+            )}
+
+            {traffic && (
+              <div className="rounded-xl border border-gray-800 bg-gray-900 p-5">
+                <div className="flex items-center justify-between gap-3 mb-5">
+                  <div>
+                    <h2 className="font-semibold text-white flex items-center gap-2">
+                      <Activity className="h-5 w-5 text-cyan-400" /> Website Traffic
+                    </h2>
+                    <p className="text-xs text-gray-500 mt-1">Public page views are tracked automatically. Admin and API pages are excluded.</p>
+                  </div>
+                  <button onClick={fetchStats} className="text-xs px-3 py-1.5 rounded-md border border-gray-700 text-gray-400 hover:bg-gray-800 hover:text-white flex items-center gap-1.5">
+                    <RefreshCw className="h-3 w-3" /> Refresh
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  <StatCard label="Total Visits" value={traffic.totalViews} icon={<Eye className="h-5 w-5 text-cyan-400" />} color="border-cyan-500/20" />
+                  <StatCard label="Today" value={traffic.todayViews} icon={<Activity className="h-5 w-5 text-green-400" />} color="border-green-500/20" />
+                  <StatCard label="Last 7 Days" value={traffic.weekViews} icon={<Activity className="h-5 w-5 text-amber-400" />} color="border-amber-500/20" />
+                  <StatCard label="Last 30 Days" value={traffic.monthViews} icon={<Activity className="h-5 w-5 text-violet-400" />} color="border-violet-500/20" />
+                </div>
+
+                <div className="grid lg:grid-cols-2 gap-5">
+                  <div className="rounded-lg border border-gray-800 bg-gray-950 p-4">
+                    <h3 className="text-sm font-semibold text-white mb-3">Top Pages</h3>
+                    <div className="space-y-3">
+                      {traffic.topPaths.length === 0 ? (
+                        <p className="text-xs text-gray-600 py-4">No visits tracked yet</p>
+                      ) : traffic.topPaths.map((item: any) => (
+                        <div key={item.path}>
+                          <div className="flex items-center justify-between gap-3 text-xs mb-1">
+                            <span className="text-gray-400 truncate" title={item.path}>{item.path}</span>
+                            <span className="font-bold text-cyan-300">{item.views}</span>
+                          </div>
+                          <div className="h-2 rounded-full bg-gray-800 overflow-hidden">
+                            <div className="h-full rounded-full bg-cyan-400" style={{ width: `${Math.max(6, (item.views / maxTopPathViews) * 100)}%` }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="rounded-lg border border-gray-800 bg-gray-950 p-4">
+                    <h3 className="text-sm font-semibold text-white mb-3">Daily Views</h3>
+                    <div className="space-y-2">
+                      {traffic.dailyViews.length === 0 ? (
+                        <p className="text-xs text-gray-600 py-4">No daily traffic yet</p>
+                      ) : traffic.dailyViews.map((item: any) => (
+                        <div key={item.day} className="flex items-center justify-between rounded-md bg-gray-900 px-3 py-2 text-xs">
+                          <span className="text-gray-500">{item.day}</span>
+                          <span className="font-bold text-gray-200">{item.views}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

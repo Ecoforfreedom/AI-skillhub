@@ -6,6 +6,7 @@ import SplashGate from '@/components/SplashGate'
 import CustomCursor from '@/components/ui/CustomCursor'
 import PageTransition from '@/components/ui/PageTransition'
 import ScrollReveal from '@/components/ui/ScrollReveal'
+import TrafficTracker from '@/components/ui/TrafficTracker'
 
 export const metadata: Metadata = {
   title: 'AI Agent Arsenal ★ 发现每个岗位能用的 AI 工具',
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CustomCursor />
         <PageTransition />
         <ScrollReveal />
+        <TrafficTracker />
         <Header />
         <main className="min-h-[calc(100vh-4rem)]" style={{ position: 'relative', zIndex: 1 }}>
           {children}
