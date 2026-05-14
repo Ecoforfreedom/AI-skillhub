@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 import SkillCard from '@/components/skills/SkillCard'
 import SkillFilters from '@/components/skills/SkillFilters'
 import type { PaginatedSkills } from '@/types'
@@ -103,7 +103,6 @@ export default function SkillsPage() {
 
         <div className="flex gap-3 mt-8 flex-wrap">
           <div className="relative flex-1 min-w-[240px] max-w-2xl">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#000' }} />
             <input
               type="text"
               placeholder="搜索工具名称、岗位、功能或使用场景"
@@ -112,7 +111,7 @@ export default function SkillsPage() {
                 if (event.key === 'Enter') setSearch((event.target as HTMLInputElement).value)
               }}
               onBlur={event => setSearch(event.target.value)}
-              className="sdv-input w-full pl-9 pr-10"
+              className="sdv-input w-full px-5 pr-10"
             />
             {searchValue ? (
               <button type="button" onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2" style={{ color: '#000' }}>
