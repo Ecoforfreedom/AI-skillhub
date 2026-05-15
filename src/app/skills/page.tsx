@@ -101,8 +101,8 @@ export default function SkillsPage() {
           </div>
         </div>
 
-        <div className="flex gap-3 mt-8 flex-wrap">
-          <div className="relative flex-1 min-w-[240px] max-w-2xl">
+        <div className="flex gap-3 mt-8 flex-wrap sm:flex-nowrap">
+          <div className="relative flex-1 min-w-full sm:min-w-[240px] max-w-2xl">
             <input
               type="text"
               placeholder="搜索工具名称、岗位、功能或使用场景"
@@ -120,7 +120,7 @@ export default function SkillsPage() {
             ) : null}
           </div>
 
-          <select value={sortBy} onChange={event => setSortBy(event.target.value)} className="sdv-select px-4 min-w-[180px]">
+          <select value={sortBy} onChange={event => setSortBy(event.target.value)} className="sdv-select px-4 min-w-full sm:min-w-[180px] sm:w-auto">
             {SORT_OPTIONS.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -128,7 +128,7 @@ export default function SkillsPage() {
             ))}
           </select>
 
-          <button type="button" onClick={() => setShowMobileFilters(!showMobileFilters)} className="sdv-btn lg:hidden">
+          <button type="button" onClick={() => setShowMobileFilters(!showMobileFilters)} className="sdv-btn w-full sm:w-auto lg:hidden">
             <SlidersHorizontal className="h-4 w-4" />
             筛选
           </button>

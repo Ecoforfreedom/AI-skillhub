@@ -70,13 +70,13 @@ export default function Header() {
             minHeight: 68,
             display: 'flex',
             alignItems: 'center',
-            gap: 14,
+            gap: 10,
             padding: '10px 4px',
           }}
         >
           <Link href="/" className="flex items-center shrink-0 min-w-0" style={{ paddingInline: 4 }}>
             <span className="flex flex-col min-w-0">
-              <span className="font-pixel" style={{ fontSize: 'clamp(20px, 5vw, 26px)', color: '#000', letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
+              <span className="font-pixel" style={{ fontSize: 'clamp(17px, 4.6vw, 26px)', color: '#000', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>
                 AI AGENT ARSENAL
               </span>
             </span>
@@ -202,12 +202,12 @@ export default function Header() {
             <button
               type="button"
               className="sdv-btn"
-              style={{ minHeight: 40, width: 40, padding: 0 }}
+              style={{ minHeight: 38, width: 38, padding: 0 }}
               onClick={() => setShowResults(!showResults)}
             >
               <Search className="h-4 w-4" />
             </button>
-            <button type="button" className="sdv-btn" style={{ minHeight: 40, width: 40, padding: 0 }} onClick={() => setOpen(!open)}>
+            <button type="button" className="sdv-btn" style={{ minHeight: 38, width: 38, padding: 0 }} onClick={() => setOpen(!open)}>
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>

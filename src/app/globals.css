@@ -408,3 +408,70 @@ html.custom-cursor-active select {
     scroll-behavior: auto !important;
   }
 }
+
+@media (max-width: 640px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    width: min(100% - 20px, 1280px);
+  }
+
+  .sdv-panel {
+    border-width: 2px;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .sdv-panel-hover:hover,
+  .sdv-tilt:hover,
+  .sdv-tilt:active {
+    transform: none;
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .sdv-slot {
+    border-width: 2px;
+    box-shadow: 2px 2px 0 #000;
+  }
+
+  .sdv-btn {
+    min-height: 42px;
+    padding-inline: 14px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28);
+  }
+
+  .sdv-btn:hover,
+  .sdv-btn:active {
+    transform: none;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28);
+  }
+
+  .sdv-input,
+  .sdv-select {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    border-width: 2px;
+    box-shadow: 2px 2px 0 #000;
+    font-size: 14px;
+  }
+
+  .sdv-input:focus,
+  .sdv-select:focus {
+    box-shadow: 3px 3px 0 #000;
+  }
+
+  .sdv-chip {
+    max-width: 100%;
+    min-height: 30px;
+    white-space: normal;
+  }
+}
